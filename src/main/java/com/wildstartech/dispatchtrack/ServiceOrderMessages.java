@@ -41,7 +41,7 @@
  *      derek.berube@wildstartech.com
  *      www.wildstartech.com
  */
-spackage com.wildstartech.dispatchtrack;
+package com.wildstartech.dispatchtrack;
 
 import java.util.ListResourceBundle;
 
