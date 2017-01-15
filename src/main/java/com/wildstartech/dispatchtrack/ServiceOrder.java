@@ -49,9 +49,7 @@ import java.util.List;
 public interface ServiceOrder {
    public enum Status {NEW, SCHEDULED, STARTED, UNABLE_TO_START, FINISHED, 
       UNABLE_TO_FINISH};
-   public final int SERVICE_TYPE_DELIVERY=0;
-   public final int SERVICE_TYPE_PICKUP=1;
-   public final int SERVICE_TYPE_SERVICE=2;
+   public enum ServiceType {DELIVERY,PICKUP,SERVICE};
    
    //***** accountId
    public String getAccountId();
@@ -96,11 +94,12 @@ public interface ServiceOrder {
    //***** drivers   
    public boolean addDriver(Driver driver);
    public List<Driver> getDrivers();
+   public boolean removeDriver(Driver drive);
    public void setDrivers(List<Driver> drivers);
    
-   //***** driverId
-   public String getDriverId();
-   public void setDriverId(String driverId);
+   //***** id
+   public String getId();
+   public void setId(String id);
    
    //***** items
    public List<Item> getItems();
@@ -146,6 +145,10 @@ public interface ServiceOrder {
    public String getOrigin();
    public void setOrigin(String origin);
    
+   //***** preCall
+   public PreCall getPreCall();
+   public void setPreCall(PreCall preCall);
+   
    //***** preReqs
    public boolean addPreReq(String prerequisiteOrderId);
    public List<String> getPreReqs();
@@ -165,6 +168,7 @@ public interface ServiceOrder {
    
    //***** serviceType
    public String getServiceType();
+   public String getServiceTypeLabel();
    public void setServiceType(String serviceType);
    
    //***** serviceTime

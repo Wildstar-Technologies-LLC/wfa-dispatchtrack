@@ -66,15 +66,18 @@ public class MockServiceOrder implements ServiceOrder {
    private Date requestTimeWindowStart=null;
    private Date requestTimeWindowStop=null;
    
+   private List<Driver> drivers=null;
    private List<Item> items=null;
    private List<Note> notes=null;
    private List<String> prerequisiteOrderIds=null;
    
+   private PreCall preCall=null;
    private Status status=Status.NEW;
    private String accountId="";
    private String description="";
    private String displayOrderNumber="";
    private String driverId="";
+   private String id="";
    private String number="";
    private String origin="";
    private String serviceType="";
@@ -87,6 +90,8 @@ public class MockServiceOrder implements ServiceOrder {
     * Default, no-argument constructor
     */
    public MockServiceOrder() {
+      this.preCall=new MockPreCall();
+      this.drivers=new ArrayList<Driver>();
       this.items=new ArrayList<Item>();
       this.notes=new ArrayList<Note>();
       this.prerequisiteOrderIds=new ArrayList<String>();
@@ -225,16 +230,43 @@ public class MockServiceOrder implements ServiceOrder {
    public void setDisplayOrderNumber(String orderNumber) {
       this.displayOrderNumber=orderNumber;
    }
-   //***** driverId
+   //***** driver
    @Override
-   public String getDriverId() {
-      return this.driverId;
+   public boolean addDriver(Driver driver) {
+      boolean result=false;
+      if (driver != null) {
+         result=this.drivers.add(driver);
+      } // END if (driver != null)
+      return result;
    }
    @Override
-   public void setDriverId(String driverId) {
-      this.driverId=driverId;
+   public List<Driver> getDrivers() {
+      return Collections.unmodifiableList(this.drivers);
    }
-
+   @Override
+   public boolean removeDriver(Driver driver) {
+      boolean result=false;
+      if (driver != null) {
+         result=this.drivers.remove(driver);
+      }
+      return result;
+   }
+   @Override
+   public void setDrivers(List<Driver> drivers) {
+      this.drivers.clear();
+      if ((drivers != null) && (drivers.size() > 0)) {
+         this.drivers.addAll(drivers);
+      } // END if ((drivers != null) && (drivers.size() > 0))
+   }
+   
+   //***** id
+   public String getId() {
+      return this.id;      
+   }
+   public void setId(String id) {
+      this.id=id;
+   }
+   
    //***** items
    public List<Item> getItems() {
       return Collections.unmodifiableList(this.items);
@@ -316,7 +348,15 @@ public class MockServiceOrder implements ServiceOrder {
    public void setOrigin(String origin) {
       this.origin=origin;
    }
-
+   //***** preCall
+   @Override
+   public PreCall getPreCall() {
+      return this.preCall;
+   }
+   @Override
+   public void setPreCall(PreCall preCall) {
+      this.preCall=preCall;
+   }
    //***** preReqs
    @Override
    public boolean addPreReq(String prerequisiteOrderId) {
