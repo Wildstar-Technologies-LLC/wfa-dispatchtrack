@@ -43,30 +43,27 @@
  */
 package com.wildstartech.dispatchtrack;
 
-public class MockPreCall implements PreCall {
-   private String confirmationStatus="";
-   private String confirmationStatusText="";
-   
-   public MockPreCall() {
+import java.text.MessageFormat;
+import java.util.Properties;
+
+import org.testng.annotations.Test;
+
+import com.wildstartech.dispatchtrack.ServiceManager.OperationType;
+
+public class ServiceManagerFactoryTest {
+   /**
+    * Tests the ServiceManagerFactory to ensure that the 
+    * {@code getInstance()} method works and returns an
+    * initialized instance of the {@code ServiceManager} class.
+    */
+   @Test
+   public void testGetInstance() {
+      ServiceManager manager=null;
+      ServiceManagerFactory factory=null;
       
-   }
-   
-   //***** confirmationStatus
-   @Override
-   public String getConfirmationStatus() {
-      return this.confirmationStatus;
-   }
-   @Override
-   public void setConfirmationStatus(String status) {
-      this.confirmationStatus=status;
-   }
-   //***** confirmationStatusText
-   @Override
-   public String getConfirmationStatusText() {
-      return this.confirmationStatusText;
-   }
-   @Override
-   public void setConfirmationStatusText(String statusText) {
-      this.confirmationStatusText=statusText;
-   }
+      factory=new ServiceManagerFactory();
+      manager=factory.getServiceManager();
+      assert manager != null;
+      assert manager.isInitialized();      
+   }   
 }

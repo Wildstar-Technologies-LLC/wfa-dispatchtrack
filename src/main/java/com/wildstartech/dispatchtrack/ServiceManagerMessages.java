@@ -47,21 +47,31 @@ import java.util.ListResourceBundle;
 
 public class ServiceManagerMessages extends ListResourceBundle {
    public static final String ERR_CONFIG_FILE_NOT_FOUND=
-         "ERR_CONFIG_FILE_NOT_FOUND";
+      "ERR_CONFIG_FILE_NOT_FOUND";
    public static final String ERR_CONFIG_PROPERTY_MISSING=
-         "ERR_CONFIG_PROPERTY_MISSING";
+      "ERR_CONFIG_PROPERTY_MISSING";
+   public static final String ERR_FILE_IOEXCEPTION=
+      "ERR_FILE_IOEXCEPTION";
    public static final String ERR_INIT_FAILED="ERR_INIT_FAILED";
+   public static String ERR_MANAGER_LOAD=
+         "ERR_MANAGER_LOAD";
    public static final String ERR_NOT_INITIALIZED=
-         "ERR_NOT_INITIALIZED";
+      "ERR_NOT_INITIALIZED";
+   public static final String ERR_PROPERTY_NOT_FOUND=
+      "ERR_PROPERTY_NOT_FOUND";
    public static String ERR_READING_CONFIG_FILE=
-         "ERR_READING_CONFIG_FILE";
+      "ERR_READING_CONFIG_FILE";   
    
    public Object[][] getContents() {
       return new Object[][] {
-         {ERR_CONFIG_PROPERTY_MISSING,"The configuration file does not have an entry for the \"{%0}\"property."},
+         {ERR_CONFIG_FILE_NOT_FOUND,"The specified configuration file, \"{0}\" could not be found."},
+         {ERR_CONFIG_PROPERTY_MISSING,"The \"{0}\"configuration file does not have an entry for the \"{1}\"property."},
+         {ERR_FILE_IOEXCEPTION,"An IOException occurred while processing the \"{0}\" file."},
          {ERR_INIT_FAILED,"The ServiceManager initialization process failed."},
+         {ERR_MANAGER_LOAD,"An \"{0}\" error occurred while trying to load the \"{1}\" ServiceManager implementation."},
          {ERR_NOT_INITIALIZED,"The ServiceManager has not been initialized."},
-         {ERR_READING_CONFIG_FILE,"An error encountered processing the configuration file."}
+         {ERR_PROPERTY_NOT_FOUND,"The specified property, \"{0}\", was not found in the \"{1}\" configuration file."},
+         {ERR_READING_CONFIG_FILE,"An error encountered processing the \"{0}\" configuration file."}         
       };      
    }
 }

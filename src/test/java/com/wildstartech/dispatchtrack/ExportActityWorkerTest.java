@@ -43,30 +43,28 @@
  */
 package com.wildstartech.dispatchtrack;
 
-public class MockPreCall implements PreCall {
-   private String confirmationStatus="";
-   private String confirmationStatusText="";
-   
-   public MockPreCall() {
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import org.testng.annotations.Test;
+import com.wildstartech.dispatchtrack.spi.ExportActivityWorker;
+
+public class ExportActityWorkerTest {
+   @Test
+   public void  testDoWork() {
+      ExportActivityWorker worker=null;
+      Calendar calendar=null;
       
-   }
-   
-   //***** confirmationStatus
-   @Override
-   public String getConfirmationStatus() {
-      return this.confirmationStatus;
-   }
-   @Override
-   public void setConfirmationStatus(String status) {
-      this.confirmationStatus=status;
-   }
-   //***** confirmationStatusText
-   @Override
-   public String getConfirmationStatusText() {
-      return this.confirmationStatusText;
-   }
-   @Override
-   public void setConfirmationStatusText(String statusText) {
-      this.confirmationStatusText=statusText;
+      // ***** Let's setup the date
+      calendar=new GregorianCalendar();
+      calendar.set(2017, 0, 23, 12, 0, 0);
+      // ***** Let's setup the worker
+      worker=new ExportActivityWorker();
+      worker.setApiKey("37c7fe3ea356bd311");
+      worker.setCode("justodelivery");
+      worker.setEndPoint("https://justodelivery.dispatchtrack.com/orders/api/export.xml");
+      worker.setActivityDate(calendar.getTime());
+      
+      worker.doWork();
    }
 }

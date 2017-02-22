@@ -41,32 +41,15 @@
  *      derek.berube@wildstartech.com
  *      www.wildstartech.com
  */
-package com.wildstartech.dispatchtrack;
+package com.wildstartech.dispatchtrack.spi;
 
-public class MockPreCall implements PreCall {
-   private String confirmationStatus="";
-   private String confirmationStatusText="";
-   
-   public MockPreCall() {
-      
-   }
-   
-   //***** confirmationStatus
-   @Override
-   public String getConfirmationStatus() {
-      return this.confirmationStatus;
-   }
-   @Override
-   public void setConfirmationStatus(String status) {
-      this.confirmationStatus=status;
-   }
-   //***** confirmationStatusText
-   @Override
-   public String getConfirmationStatusText() {
-      return this.confirmationStatusText;
-   }
-   @Override
-   public void setConfirmationStatusText(String statusText) {
-      this.confirmationStatusText=statusText;
+import java.util.ListResourceBundle;
+
+public class WebWorkerMessages  extends ListResourceBundle {
+   public static final String ERR_BAD_ENDPOINT="ERR_BAD_ENDPOINT";
+   public Object[][] getContents() {
+      return new Object[][] {
+         {ERR_BAD_ENDPOINT,"The specified web address, \"{0}\" is not a well-formed web address (URL)."}         
+      };
    }
 }

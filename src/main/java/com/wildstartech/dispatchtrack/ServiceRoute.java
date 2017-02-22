@@ -43,30 +43,55 @@
  */
 package com.wildstartech.dispatchtrack;
 
-public class MockPreCall implements PreCall {
-   private String confirmationStatus="";
-   private String confirmationStatusText="";
+import java.util.Date;
+
+public interface ServiceRoute {
+   public Date getActualEndTime();
+   public void setActualEndTime(Date endTime);
    
-   public MockPreCall() {
-      
-   }
+   public Date getActualStartTime();
+   public void setActualStartTime(Date startTime);
    
-   //***** confirmationStatus
-   @Override
-   public String getConfirmationStatus() {
-      return this.confirmationStatus;
-   }
-   @Override
-   public void setConfirmationStatus(String status) {
-      this.confirmationStatus=status;
-   }
-   //***** confirmationStatusText
-   @Override
-   public String getConfirmationStatusText() {
-      return this.confirmationStatusText;
-   }
-   @Override
-   public void setConfirmationStatusText(String statusText) {
-      this.confirmationStatusText=statusText;
-   }
+   public int getActualTime();
+   public void setActualTime(int actualTime);
+   
+   public float getAmount();
+   public void setAmount(float amount);
+   
+   public float getAmountDelivered();
+   public void setAmountDelivered(float amountDelivered);
+   
+   public String getDriverName();
+   public void setDriverName(String driverName);
+   
+   public int getDriverNumber();
+   public void setDriverNumber(int driverNumber);
+   
+   public Date getEstimatedEndTime();
+   public void setEstimatedEndTime(Date endTime);
+   
+   public Date getEstimatedStartTime();
+   public void setEstimatedStartTime(Date startTime);
+   
+   public String getLogin();
+   public void setLogin(String login);
+   
+   public int getMiles();
+   public void setMiles(int miles);
+   
+   public int getPieces();
+   public void setPieces(int pieces);
+   
+   public String getServiceUnit();
+   public void setServiceUnit(String name);
+ 
+   public int getStop();
+   public void setStop(int lastStop);
+   
+   public int getTotalTime();
+   public void setTotalTime(int totalTime);
+   
+   public float getVolume();
+   public void setVolume(float volume);
+     
 }

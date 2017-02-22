@@ -412,6 +412,11 @@ public class MockServiceOrder implements ServiceOrder {
       this.serviceType=serviceType;
    }
    
+   @Override
+   public String getServiceTypeLabel() {     
+      return this.serviceType;
+   }
+   
    //***** serviceTime
    @Override
    public int getServiceTime() {
@@ -515,5 +520,4 @@ public class MockServiceOrder implements ServiceOrder {
    public void setTruckId(String truckId) {
       this.truckId=truckId;
    }
-
 }

@@ -43,24 +43,27 @@
  */
 package com.wildstartech.dispatchtrack.spi;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.wildstartech.dispatchtrack.Localization;
+import com.wildstartech.dispatchtrack.ManifestEntry;
 import com.wildstartech.dispatchtrack.ServiceManager;
-import com.wildstartech.dispatchtrack.ServiceManagerMessages;
 import com.wildstartech.dispatchtrack.ServiceOrder;
+import com.wildstartech.dispatchtrack.ServiceOrder.ServiceType;
+import com.wildstartech.dispatchtrack.ServiceOrder.Status;
+import com.wildstartech.dispatchtrack.ServiceRoute;
 
+/**
+ * Concrete implementation of the {@code ServiceManager} interface
+ * @author Derek Berube, Wildstar Technologies, LLC.
+ * @version 0.1
+ *
+ */
 public class ServiceManagerImpl extends ServiceManager {
    private static final String _CLASS=ServiceManagerImpl.class.getName();
    private static final Logger logger=Logger.getLogger(_CLASS);
-   private static final String _CONFIG_FILENAME="ServiceManager.properties";
   
    
    /** 
@@ -72,76 +75,7 @@ public class ServiceManagerImpl extends ServiceManager {
       logger.exiting(_CLASS, "ServiceManagerImpl()");
    }
    
-   /**
-    * Read the necessary configuration properties from the 
-    * {@code ServiceManager.properties} configuration file.
-    */
-   private void init() {
-      logger.entering(_CLASS, "init()");
-      ClassLoader cl=null;
-      InputStream in=null;
-      Properties props=null;
-      String msg=null;
-      
-      cl=ServiceManagerImpl.class.getClassLoader();
-      in=cl.getResourceAsStream(_CONFIG_FILENAME);
-      if (in != null) {
-         props=new Properties();
-         try {
-            props.load(in);
-            setApiKey(loadProperty(props,ServiceManager._CONFIG_KEY_APIKEY));
-            setCode(loadProperty(props,ServiceManager._CONFIG_KEY_CODE));
-            setServer(loadProperty(props,ServiceManager._CONFIG_KEY_SERVER));
-            checkProperties();
-            if (!isInitialized()) {
-               msg=Localization.getString(
-                  "ServiceManagerMessages", 
-                  ServiceManagerMessages.ERR_INIT_FAILED, 
-                  null, 
-                  null, 
-                  new Object[]{});
-            }
-         } catch (IOException ex) {
-            msg=Localization.getString(
-                  "ServiceManagerMessages", 
-                  ServiceManagerMessages.ERR_READING_CONFIG_FILE, 
-                  null, 
-                  cl, 
-                  new Object[] {_CONFIG_FILENAME});
-         } // END try/catch
-      } else {
-         msg=Localization.getString(
-               "ServiceManagerMessages", 
-               ServiceManagerMessages.ERR_CONFIG_FILE_NOT_FOUND, 
-               null, 
-               cl, 
-               new Object[] {_CONFIG_FILENAME});
-          logger.severe(msg);
-      } // END if (in != null)
-      
-      logger.exiting(_CLASS, "init()");
-   }
    
-   private String loadProperty(Properties props,String propertyName) {
-      logger.entering(_CLASS, "loadProperty(Properties,String)",
-            new Object[] {props,propertyName});
-      ClassLoader cl=null;
-      String msg="";
-      String propValue="";
-      
-      propValue=props.getProperty(propertyName);
-      if (propValue == null) {
-         msg=Localization.getString(
-            "ServiceManagerMessages", 
-            ServiceManagerMessages.ERR_CONFIG_PROPERTY_MISSING, 
-            null, 
-            cl, 
-            new Object[] {propertyName});
-         logger.severe(msg);
-      } // END if (property == null)
-      logger.exiting(_CLASS, "loadProperty(Properties,String)",propValue);
-      return propValue;      
-   }
    @Override
    public List<ServiceOrder> importOrders(List<ServiceOrder> orders) {
       logger.entering(_CLASS, "importOrders(List<ServiceOrder>)",orders);
@@ -153,7 +87,7 @@ public class ServiceManagerImpl extends ServiceManager {
    }
 
    @Override
-   public ServiceOrder setServiceOrder(ServiceOrder order) {
+   public ServiceOrder setServiceOrder(ServiceOrder order, Date activityDate) {
       logger.entering(_CLASS, "setServiceOrder(ServiceOrder)",order);
       ServiceOrder resultOrder=null;
       
@@ -163,7 +97,7 @@ public class ServiceManagerImpl extends ServiceManager {
    }
 
    @Override
-   public List<ServiceOrder> getServiceOrderForDate(Date date) {
+   public List<ServiceOrder> getServiceOrdersForDate(Date date) {
       logger.entering(_CLASS, "getServiceOrderForDate(Date)",date);
       List<ServiceOrder> serviceOrders=null;
       
@@ -172,4 +106,52 @@ public class ServiceManagerImpl extends ServiceManager {
       return serviceOrders;
    }
 
+
+   @Override
+   public ServiceOrder removeServiceOrder(String orderNumber) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   @Override
+   public List<ServiceOrder> removeServiceOrdersByDate(Date date) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   @Override
+   public List<ServiceOrder> getServiceOrders(Date activityDate, String serviceUnit, ServiceType serviceType,
+         String account, Status status) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   @Override
+   public void getDeliveryReceipt(String orderNumber) {
+      // TODO Auto-generated method stub
+      
+   }
+
+
+   @Override
+   public void getStatus(Date startDate, Date stopDate, String serviceUnit, String orderNumber) {
+      
+   }
+
+
+   @Override
+   public List<ServiceRoute> getRouteStatistics(Date activityDate, String serviceUnit) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   @Override
+   public List<ManifestEntry> getManifestActivity(Date activityDate, String accountName) {
+      // TODO Auto-generated method stub
+      return null;
+   }   
 }

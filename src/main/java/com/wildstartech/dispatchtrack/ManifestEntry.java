@@ -43,30 +43,47 @@
  */
 package com.wildstartech.dispatchtrack;
 
-public class MockPreCall implements PreCall {
-   private String confirmationStatus="";
-   private String confirmationStatusText="";
+import java.util.Date;
+
+public interface ManifestEntry {
+   //***** number
+   public String getNumber();
+   public void setNumber(String number);
    
-   public MockPreCall() {
-      
-   }
    
-   //***** confirmationStatus
-   @Override
-   public String getConfirmationStatus() {
-      return this.confirmationStatus;
-   }
-   @Override
-   public void setConfirmationStatus(String status) {
-      this.confirmationStatus=status;
-   }
-   //***** confirmationStatusText
-   @Override
-   public String getConfirmationStatusText() {
-      return this.confirmationStatusText;
-   }
-   @Override
-   public void setConfirmationStatusText(String statusText) {
-      this.confirmationStatusText=statusText;
-   }
+   //***** scheduledDate
+   public Date getScheduledDate();
+   public void setScheduledDate(Date date);
+   public void setScheduledDate(String date);
+   
+   //***** scheduledTime
+   public Date getScheduledTime();
+   public void setScheduledTime(Date scheduledTime);
+   
+   //***** serviceOrderId
+   public String getServiceOrderId();
+   public void setServiceOrderId(String serviceOrderId);
+   
+   //***** serviceUnit
+   public String getServiceUnit();
+   public void setServiceUnit(String serviceUnit);
+
+   //***** status
+   public String getStatus();
+   public void setStatus(String status);
+   
+   //***** stopNumber
+   public int getStopNumber();
+   public void setStopNumber(int stopNumber);
+   
+   //***** windowEndTime
+   public Date getWindowEndTime();
+   public void setWindowEndTime(Date endTime);
+   public void setWindowEndTime(String endTime);
+   
+   //***** windowStartTime
+   public Date getWindowStartTime();
+   public void setWindowStartTime(Date startTime);
+   public void setWindowStartTime(String startTime);
+   
 }
