@@ -57,8 +57,8 @@ public class ServiceUnitImpl implements ServiceUnit {
     * Default, no-argument constructor.
     */
    public ServiceUnitImpl() {
-      logger.entering(_CLASS, "DriverImpl()");
-      logger.exiting(_CLASS, "DriverImpl()");
+      logger.entering(_CLASS, "ServiceUnitImpl()");
+      logger.exiting(_CLASS, "ServiceUnitImpl()");
    }
    //***** login
    @Override
@@ -69,11 +69,11 @@ public class ServiceUnitImpl implements ServiceUnit {
    }
    @Override
    public void setLogin(String login) {
-      logger.entering(_CLASS, "setId(String)",login);
+      logger.entering(_CLASS, "setLogin(String)",login);
       this.login=login;
-      logger.entering(_CLASS, "setId(String)");
+      logger.entering(_CLASS, "setLogin(String)");
    }
-  //***** driverName
+  //***** name
    @Override
    public String getName() {
       logger.entering(_CLASS, "getName()");

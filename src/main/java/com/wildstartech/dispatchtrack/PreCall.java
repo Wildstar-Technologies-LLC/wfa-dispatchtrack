@@ -47,6 +47,6 @@ public interface PreCall {
    public String getConfirmationStatus();
    public void setConfirmationStatus(String status);
    
-   public String getConfirmationStatusText();
-   public void setConfirmationStatusText(String statusText);
+   public String getTextConfirmationStatus();
+   public void setTextConfirmationStatus(String statusText);
 }

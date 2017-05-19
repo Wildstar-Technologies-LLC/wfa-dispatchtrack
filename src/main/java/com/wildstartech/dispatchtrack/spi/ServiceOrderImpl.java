@@ -105,7 +105,7 @@ public class ServiceOrderImpl implements ServiceOrder {
    private List<Image> images=null;
    private List<Item> items=null;
    private List<Note> notes=null;
-   private List<ShipmentEvent> events=null;
+   private List<ShipmentEvent> orderShipmentEvents=null;
    private List<String> prerequisiteOrderIds=null;
    
    private Map<String,String> additionalFields=null;
@@ -141,7 +141,7 @@ public class ServiceOrderImpl implements ServiceOrder {
       this.additionalFields=new TreeMap<String,String>();
       this.customer=new CustomerImpl();
       this.drivers=new ArrayList<Driver>();
-      this.events=new ArrayList<ShipmentEvent>();
+      this.orderShipmentEvents=new ArrayList<ShipmentEvent>();
       this.extra=new TreeMap<String,String>();
       this.images=new ArrayList<Image>();
       this.items=new ArrayList<Item>();
@@ -265,6 +265,16 @@ public class ServiceOrderImpl implements ServiceOrder {
       logger.exiting(_CLASS, "setCODAmount(float)");
    }
 
+   //***** count
+   @Override
+   public int getCount() {
+      logger.entering(_CLASS, "getCount()");
+      int count=0;
+      count=this.items.size();
+      logger.exiting(_CLASS, "getCount()",count);
+      return count;
+   }
+   
    //***** customer
    @Override
    public Customer getCustomer() {
@@ -282,13 +292,13 @@ public class ServiceOrderImpl implements ServiceOrder {
 
    //***** deliveredItemQuantity
    @Override
-   public int getDeliveredItemQuantity() {
-      logger.entering(_CLASS, "getDeliveredItemQuantity()");
+   public int getDeliveredQuantity() {
+      logger.entering(_CLASS, "getDeliveredQuantity()");
       int count=0;
       for (Item item: this.items) {
          count+=item.getDeliveredQuantity();
       } // END for (Item item: this.items)
-      logger.exiting(_CLASS, "getDeliveredItemQuantity()",count);
+      logger.exiting(_CLASS, "getDeliveredQuantity()",count);
       return count;
    }
    
@@ -966,26 +976,26 @@ public class ServiceOrderImpl implements ServiceOrder {
 
    //***** shipmentEvents
    @Override
-   public boolean addShipmentEvent(ShipmentEvent event) {
-      logger.entering(_CLASS, "addShipmentEvent(ShipmentEvent)",event);
+   public boolean addOrderShipmentEvent(ShipmentEvent event) {
+      logger.entering(_CLASS, "addOrderShipmentEvent(ShipmentEvent)",event);
       boolean result=false;
-      result=this.events.add(event);
-      logger.exiting(_CLASS, "addShipmentEvent(ShipmentEvent)",result);
+      result=this.orderShipmentEvents.add(event);
+      logger.exiting(_CLASS, "addOrderShipmentEvent(ShipmentEvent)",result);
       return result;
    }
    @Override
-   public void clearShipmentEvents() {
-      logger.entering(_CLASS, "clearShipmentEvents()");
-      this.events.clear();
-      logger.exiting(_CLASS, "clearShipmentEvents()");
+   public void clearOrderShipmentEvents() {
+      logger.entering(_CLASS, "clearOrderShipmentEvents()");
+      this.orderShipmentEvents.clear();
+      logger.exiting(_CLASS, "clearOrderShipmentEvents()");
    }
    @Override
-   public ShipmentEvent getShipmentEvent(int i) {
-      logger.entering(_CLASS, "getShipmentEvent(int)",i);
+   public ShipmentEvent getOrderShipmentEvent(int i) {
+      logger.entering(_CLASS, "getOrderShipmentEvent(int)",i);
       int numberOfEvents=0;
       ShipmentEvent event=null;
       
-      numberOfEvents=this.events.size();
+      numberOfEvents=this.orderShipmentEvents.size();
       if (i >= numberOfEvents) {
          i=numberOfEvents - 1;
       }  // END if (i >= numberOfEvents)
@@ -993,73 +1003,77 @@ public class ServiceOrderImpl implements ServiceOrder {
          i=0;
       } // END if (i < 0) 
       if (numberOfEvents > 0) {
-         event=this.events.get(i);
+         event=this.orderShipmentEvents.get(i);
       } // END if (numberOfEvents > 0)    
-      logger.entering(_CLASS, "getShipmentEvent(int)",event);
+      logger.entering(_CLASS, "getOrderShipmentEvent(int)",event);
       return event;
    }
    @Override
-   public List<ShipmentEvent> getShipmentEvents() {
-      logger.entering(_CLASS, "getShipmentEvents()");
+   public List<ShipmentEvent> getOrderShipmentEvents() {
+      logger.entering(_CLASS, "getOrderShipmentEvents()");
       List<ShipmentEvent> events=null;
-      events=Collections.unmodifiableList(this.events);
-      logger.exiting(_CLASS, "getShipmentEvents()",events);
+      events=Collections.unmodifiableList(this.orderShipmentEvents);
+      logger.exiting(_CLASS, "getOrderShipmentEvents()",events);
       return events;
    }
    @Override 
-   public ShipmentEvent removeShipmentEvent(int i) {
+   public ShipmentEvent removeOrderShipmentEvent(int i) {
       logger.entering(_CLASS, "removeShipmentEvent(int)",i);
       int numberOfEvents=0;
       ShipmentEvent event=null;
       
-      numberOfEvents=this.events.size();
+      numberOfEvents=this.orderShipmentEvents.size();
       if ((i > numberOfEvents -1) || (i < 0)) {
          throw new IndexOutOfBoundsException();
       } // END if ((i > numberOfEvents -1) || (i < 0))
-      event=this.events.remove(i);
+      event=this.orderShipmentEvents.remove(i);
       logger.entering(_CLASS, "removeShipmentEvent(int)",event);
       return event;
    }
    @Override
-   public boolean removeShipmentEvent(ShipmentEvent event) {
-      logger.entering(_CLASS, "removeShipmentEvent(ShipmentEvent)",event);
+   public boolean removeOrderShipmentEvent(ShipmentEvent event) {
+      logger.entering(_CLASS, "removeOrderShipmentEvent(ShipmentEvent)",event);
       boolean result=false;
-      result=this.events.remove(event);
-      logger.exiting(_CLASS, "removeShipmentEvent(ShipmentEvent)",result);
+      result=this.orderShipmentEvents.remove(event);
+      logger.exiting(_CLASS, "removeOrderShipmentEvent(ShipmentEvent)",result);
       return result;
    }
    @Override
-   public ShipmentEvent setShipmentEvent(int index, ShipmentEvent event) {
-      logger.entering(_CLASS, "setShipmentEvent(int,ShipmentEvent)",
+   public ShipmentEvent setOrderShipmentEvent(int index, 
+         ShipmentEvent event) {
+      logger.entering(_CLASS, "setOrderShipmentEvent(int,ShipmentEvent)",
          new Object[] {index, event});
       ShipmentEvent result=null;
-      result=this.events.set(index, event);
-      logger.entering(_CLASS, "setShipmentEvent(int,ShipmentEvent)",result);
+      result=this.orderShipmentEvents.set(index, event);
+      logger.entering(_CLASS, "setOrderShipmentEvent(int,ShipmentEvent)",
+         result);
       return result;
    }
    @Override
-   public void setShipmentEvents(ShipmentEvent...events) {
-      logger.entering(_CLASS, "setShipmentEvents(ShipmentEvent...)",events);
+   public void setOrderShipmentEvents(ShipmentEvent...events) {
+      logger.entering(_CLASS, "setOrderShipmentEvents(ShipmentEvent...)",
+         events);
       if (events != null) {
          for(ShipmentEvent event: events) {
-            addShipmentEvent(event);
+            addOrderShipmentEvent(event);
          } // END for(ShipmentEvent event: events)
       } else {
-         this.events.clear();
+         this.orderShipmentEvents.clear();
       } // END if (events != null)
-      logger.exiting(_CLASS, "setShipmentEvents(ShipmentEvent...)");
+      logger.exiting(_CLASS, "setOrderShipmentEvents(ShipmentEvent...)");
    }
    @Override
-   public void setShipmentEvents(List<ShipmentEvent> events) {
-      logger.entering(_CLASS, "setShipmentEvents(List<ShipmentEvent>)",events);
+   public void setOrderShipmentEvents(List<ShipmentEvent> events) {
+      logger.entering(_CLASS, "setOrderShipmentEvents(List<ShipmentEvent>)",
+         events);
       if (events != null) {
          for(ShipmentEvent event: events) {
-            addShipmentEvent(event);
+            addOrderShipmentEvent(event);
          } // END for(ShipmentEvent event: events)
       } else {
-         this.events.clear();
+         this.orderShipmentEvents.clear();
       } // END if (events != null)
-      logger.exiting(_CLASS, "setShipmentEvents(ShipmentEvent...)");
+      logger.exiting(_CLASS, "setOrderShipmentEvents(ShipmentEvent...)");
    }
    
    //***** signature
@@ -1221,13 +1235,13 @@ public class ServiceOrderImpl implements ServiceOrder {
 
    //***** totalItemQuantity
    @Override
-   public int getTotalItemQuantity() {
-      logger.entering(_CLASS, "getItemCount()");
+   public int getTotalQuantity() {
+      logger.entering(_CLASS, "getTotalQuantity()");
       int count=0;
       for (Item item: this.items) {
          count+=item.getQuantity();
       } // END for (Item item: this.items)
-      logger.exiting(_CLASS, "getItemCount()",count);
+      logger.exiting(_CLASS, "getTotalQuantity()",count);
       return count;
    }
    

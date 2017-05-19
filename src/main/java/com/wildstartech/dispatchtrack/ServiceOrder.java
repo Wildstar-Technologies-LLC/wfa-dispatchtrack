@@ -74,13 +74,16 @@ public interface ServiceOrder {
    //***** codAmount
    public float getCODAmount();
    public void setCODAmount(float amount);
-      
+   
+   //***** count
+   public int getCount();
+   
    //***** customer
    public Customer getCustomer();
    public void setCustomer(Customer customer);
 
-   //***** deliveredItemQuantity
-   public int getDeliveredItemQuantity();
+   //***** deliveredQuantity
+   public int getDeliveredQuantity();
    
    //***** deliveryCharge 
    public float getDeliveryCharge();
@@ -246,16 +249,16 @@ public interface ServiceOrder {
    public ServiceUnit getServiceUnit();
    public void setServiceUnit(ServiceUnit serviceUnit);
 
-   //***** shipmentEvents
-   public boolean addShipmentEvent(ShipmentEvent event);
-   public void clearShipmentEvents();
-   public ShipmentEvent getShipmentEvent(int i);
-   public List<ShipmentEvent> getShipmentEvents();
-   public ShipmentEvent removeShipmentEvent(int i);
-   public boolean removeShipmentEvent(ShipmentEvent event);
-   public ShipmentEvent setShipmentEvent(int index, ShipmentEvent event);
-   public void setShipmentEvents(List<ShipmentEvent> events);
-   public void setShipmentEvents(ShipmentEvent... events);
+   //***** orderShipmentEvents
+   public boolean addOrderShipmentEvent(ShipmentEvent event);
+   public void clearOrderShipmentEvents();
+   public ShipmentEvent getOrderShipmentEvent(int i);
+   public List<ShipmentEvent> getOrderShipmentEvents();
+   public ShipmentEvent removeOrderShipmentEvent(int i);
+   public boolean removeOrderShipmentEvent(ShipmentEvent event);
+   public ShipmentEvent setOrderShipmentEvent(int index, ShipmentEvent event);
+   public void setOrderShipmentEvents(List<ShipmentEvent> events);
+   public void setOrderShipmentEvents(ShipmentEvent... events);
    
    //***** signature
    public Signature getSignature();
@@ -299,8 +302,8 @@ public interface ServiceOrder {
    public Date getTimeWindowStart();
    public void setTimeWindowStart(Date timeWindowStart);
    
-   //***** totalItemQuantity
-   public int getTotalItemQuantity();
+   //***** totalQuantity
+   public int getTotalQuantity();
    
    //***** truckId
    public Truck getTruck();

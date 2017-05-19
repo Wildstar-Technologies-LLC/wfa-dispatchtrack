@@ -96,7 +96,7 @@ public class PreCallElementProcessor extends XMLElementProcessor<ServiceOrder> {
                         preCall.setConfirmationStatus(value);
                      } else if (
                            elementName.equals("text_confirmation_status")) {
-                        preCall.setConfirmationStatusText(value);
+                        preCall.setTextConfirmationStatus(value);
                      } // END if (elementName.equals("confirmation_status"))
                      break;
                   case XMLStreamConstants.END_ELEMENT:

@@ -50,9 +50,9 @@ public interface Image {
    public Date getCreatedAt();
    public void setCreatedAt(Date date);
    
-   //**** source
-   public String getSource();
-   public void setSource(String source);
+   //**** src
+   public String getSrc();
+   public void setSrc(String src);
    
    //****
    public String getThumbnail();

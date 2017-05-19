@@ -41,7 +41,7 @@ public class ImageElementProcessor extends XMLElementProcessor<Image> {
          source=reader.getAttributeValue("", "src");
          thumbnail=reader.getAttributeValue("", "thumbnail");
          image.setCreatedAt(createdAt);
-         image.setSource(source);
+         image.setSrc(source);
          image.setThumbnail(thumbnail);
       }  else {
          if (image == null) {

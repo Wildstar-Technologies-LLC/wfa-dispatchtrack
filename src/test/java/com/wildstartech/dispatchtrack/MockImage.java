@@ -49,7 +49,7 @@ import com.wildstartech.dispatchtrack.Image;
 
 public class MockImage implements Image {
    private Date createdAt=null;
-   private String source=null;
+   private String src=null;
    private String thumbnail=null;
    
    /** 
@@ -70,12 +70,12 @@ public class MockImage implements Image {
 
    //***** source
    @Override
-   public String getSource() {
-      return this.source;
+   public String getSrc() {
+      return this.src;
    }
    @Override
-   public void setSource(String source) {
-      this.source=source;
+   public void setSrc(String src) {
+      this.src=src;
    }
 
    //***** thumbnail

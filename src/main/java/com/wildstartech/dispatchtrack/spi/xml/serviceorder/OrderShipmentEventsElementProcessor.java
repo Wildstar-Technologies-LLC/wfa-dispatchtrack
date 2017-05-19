@@ -82,7 +82,7 @@ public class OrderShipmentEventsElementProcessor extends XMLElementProcessor<Ser
          listFactory=new OrderShipmentEventsXMLFactory();
          shipmentEvents=listFactory.parse(reader);
          if (shipmentEvents != null) {
-            order.setShipmentEvents(shipmentEvents);
+            order.setOrderShipmentEvents(shipmentEvents);
          } // END if (drivers != null)
       } else {
          if (order == null) {

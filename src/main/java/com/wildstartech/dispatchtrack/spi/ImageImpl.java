@@ -53,7 +53,7 @@ public class ImageImpl implements Image {
    private static final Logger logger=Logger.getLogger(_CLASS);
    
    private Date createdAt=null;
-   private String source=null;
+   private String src=null;
    private String thumbnail=null;
    
    /** 
@@ -80,16 +80,16 @@ public class ImageImpl implements Image {
 
    //***** source
    @Override
-   public String getSource() {
-      logger.entering(_CLASS, "getSource()");
-      logger.exiting(_CLASS, "getSource()",this.source);
-      return this.source;
+   public String getSrc() {
+      logger.entering(_CLASS, "getSrc()");
+      logger.exiting(_CLASS, "getSrc()",this.src);
+      return this.src;
    }
    @Override
-   public void setSource(String source) {
-      logger.entering(_CLASS, "setSource(String)",source);
-      this.source=source;
-      logger.exiting(_CLASS, "setSource(String)");
+   public void setSrc(String src) {
+      logger.entering(_CLASS, "setSrc(String)",src);
+      this.src=src;
+      logger.exiting(_CLASS, "setSrc(String)");
    }
 
    //***** thumbnail

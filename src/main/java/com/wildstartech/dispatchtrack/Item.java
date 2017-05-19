@@ -90,7 +90,7 @@ public interface Item {
    public int getQuantity();
    public void setQuantity(int quantity);
    
-   //***** returnCode
+   //***** returnCodes
    public boolean addReturnCode(ReturnCode code);
    public void clearReturnCodes();
    public ReturnCode getReturnCode(int index);

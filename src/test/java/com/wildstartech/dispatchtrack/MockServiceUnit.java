@@ -63,7 +63,7 @@ public class MockServiceUnit implements ServiceUnit {
    public void setLogin(String login) {
       this.login=login;
    }
-  //***** driverName
+  //***** name
    @Override
    public String getName() {
       return this.name;

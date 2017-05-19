@@ -79,7 +79,7 @@ extends XMLElementProcessor<Image> {
       
       if ((image != null) && (reader != null)) {
          src=getElementText(reader);
-         image.setSource(src);         
+         image.setSrc(src);         
       }  else {
          if (image == null) {
             msg=Localization.getString(

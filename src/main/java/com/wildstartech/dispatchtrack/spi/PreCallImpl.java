@@ -51,7 +51,7 @@ public class PreCallImpl implements PreCall {
    private static final String _CLASS=PreCallImpl.class.getName();
    private static final Logger logger=Logger.getLogger(_CLASS);
    private String confirmationStatus="";
-   private String confirmationStatusText="";
+   private String textConfirmationStatus="";
    
    /**
     * Default, no-argument constructor.
@@ -77,16 +77,16 @@ public class PreCallImpl implements PreCall {
    }
    //***** confirmationStatusText
    @Override
-   public String getConfirmationStatusText() {
-      logger.entering(_CLASS, "getConfirmationStatusText()");
-      logger.exiting(_CLASS, "getConfirmationStatusText()",
-            this.confirmationStatusText);
-      return this.confirmationStatusText;
+   public String getTextConfirmationStatus() {
+      logger.entering(_CLASS, "getTextConfirmationStatus()");
+      logger.exiting(_CLASS, "getTextConfirmationStatus()",
+            this.textConfirmationStatus);
+      return this.textConfirmationStatus;
    }
    @Override
-   public void setConfirmationStatusText(String statusText) {
-      logger.entering(_CLASS, "setConfirmationStatusText(String)",statusText);
-      this.confirmationStatusText=statusText;
-      logger.exiting(_CLASS, "setConfirmationStatusText(String)");
+   public void setTextConfirmationStatus(String statusText) {
+      logger.entering(_CLASS, "setTextConfirmationStatus(String)",statusText);
+      this.textConfirmationStatus=statusText;
+      logger.exiting(_CLASS, "setTextConfirmationStatus(String)");
    }
 }

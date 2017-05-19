@@ -43,7 +43,7 @@
  */
 package com.wildstartech.dispatchtrack;
 
-public class MockShipmentEvent implements ShipmentEvent {
+public class MockOrderShipmentEvent implements ShipmentEvent {
    private int timestamp=0;
    private String customerFlag=null;
    private String description=null;
@@ -52,7 +52,7 @@ public class MockShipmentEvent implements ShipmentEvent {
    /**
     * Default, no-argument constructor.
     */
-   public MockShipmentEvent() {
+   public MockOrderShipmentEvent() {
       
    }
    

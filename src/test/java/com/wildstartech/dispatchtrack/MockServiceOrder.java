@@ -78,7 +78,7 @@ public class MockServiceOrder implements ServiceOrder {
    private List<Image> images=null;
    private List<Item> items=null;
    private List<Note> notes=null;
-   private List<ShipmentEvent> events=null;
+   private List<ShipmentEvent> shipmentEvents=null;
    private List<String> prerequisiteOrderIds=null;
    
    private Map<String,String> additionalFields=null;
@@ -112,7 +112,7 @@ public class MockServiceOrder implements ServiceOrder {
    public MockServiceOrder() {
       this.customer=new MockCustomer();
       this.drivers=new ArrayList<Driver>();
-      this.events=new ArrayList<ShipmentEvent>();
+      this.shipmentEvents=new ArrayList<ShipmentEvent>();
       this.historyEvents=new ArrayList<HistoryEvent>();
       this.images=new ArrayList<Image>();
       this.items=new ArrayList<Item>();
@@ -206,6 +206,12 @@ public class MockServiceOrder implements ServiceOrder {
       this.codAmount=amount;
    }
 
+   //***** count
+   @Override
+   public int getCount() {
+      return this.items.size();
+   }
+   
    //***** customer
    @Override
    public Customer getCustomer() {
@@ -219,7 +225,7 @@ public class MockServiceOrder implements ServiceOrder {
 
    //***** deliveredItemQuantity
    @Override
-   public int getDeliveredItemQuantity() {
+   public int getDeliveredQuantity() {
       int count=0;
       for (Item item: this.items) {
          count+=item.getDeliveredQuantity();
@@ -669,19 +675,19 @@ public class MockServiceOrder implements ServiceOrder {
 
  //***** shipmentEvents
    @Override
-   public boolean addShipmentEvent(ShipmentEvent event) {
-      return this.events.add(event);
+   public boolean addOrderShipmentEvent(ShipmentEvent event) {
+      return this.shipmentEvents.add(event);
    }
    @Override
-   public void clearShipmentEvents() {
-      this.events.clear();      
+   public void clearOrderShipmentEvents() {
+      this.shipmentEvents.clear();      
    }
    @Override
-   public ShipmentEvent getShipmentEvent(int i) {
+   public ShipmentEvent getOrderShipmentEvent(int i) {
       int numberOfEvents=0;
       ShipmentEvent event=null;
       
-      numberOfEvents=this.events.size();
+      numberOfEvents=this.shipmentEvents.size();
       if (i >= numberOfEvents) {
          i=numberOfEvents - 1;
       }  // END if (i >= numberOfEvents)
@@ -689,56 +695,56 @@ public class MockServiceOrder implements ServiceOrder {
          i=0;
       } // END if (i < 0) 
       if (numberOfEvents > 0) {
-         event=this.events.get(i);
+         event=this.shipmentEvents.get(i);
       } // END if (numberOfEvents > 0)    
       return event;
    }
    @Override
-   public List<ShipmentEvent> getShipmentEvents() {
+   public List<ShipmentEvent> getOrderShipmentEvents() {
       List<ShipmentEvent> events=null;
-      events=Collections.unmodifiableList(this.events);
+      events=Collections.unmodifiableList(this.shipmentEvents);
       return events;
    }
    @Override 
-   public ShipmentEvent removeShipmentEvent(int i) {
+   public ShipmentEvent removeOrderShipmentEvent(int i) {
       int numberOfEvents=0;
       ShipmentEvent event=null;
       
-      numberOfEvents=this.events.size();
+      numberOfEvents=this.shipmentEvents.size();
       if ((i > numberOfEvents -1) || (i < 0)) {
          throw new IndexOutOfBoundsException();
       } // END if ((i > numberOfEvents -1) || (i < 0))
-      event=this.events.remove(i);
+      event=this.shipmentEvents.remove(i);
       return event;
    }
    @Override
-   public boolean removeShipmentEvent(ShipmentEvent event) {
+   public boolean removeOrderShipmentEvent(ShipmentEvent event) {
       boolean result=false;
-      result=this.events.remove(event);
+      result=this.shipmentEvents.remove(event);
       return result;
    }
    @Override
-   public ShipmentEvent setShipmentEvent(int index, ShipmentEvent event) {
-      return this.events.set(index, event);
+   public ShipmentEvent setOrderShipmentEvent(int index, ShipmentEvent event) {
+      return this.shipmentEvents.set(index, event);
    }
    @Override
-   public void setShipmentEvents(ShipmentEvent...events) {
+   public void setOrderShipmentEvents(ShipmentEvent...events) {
       if (events != null) {
          for(ShipmentEvent event: events) {
-            addShipmentEvent(event);
+            addOrderShipmentEvent(event);
          } // END for(ShipmentEvent event: events)
       } else {
-         this.events.clear();
+         this.shipmentEvents.clear();
       } // END if (events != null)
    }
    @Override
-   public void setShipmentEvents(List<ShipmentEvent> events) {
+   public void setOrderShipmentEvents(List<ShipmentEvent> events) {
       if (events != null) {
          for(ShipmentEvent event: events) {
-            addShipmentEvent(event);
+            addOrderShipmentEvent(event);
          } // END for(ShipmentEvent event: events)
       } else {
-         this.events.clear();
+         this.shipmentEvents.clear();
       } // END if (events != null)
    }
    
@@ -862,7 +868,7 @@ public class MockServiceOrder implements ServiceOrder {
    
    //***** totalItemQuantity
    @Override
-   public int getTotalItemQuantity() {
+   public int getTotalQuantity() {
       int count=0;
       for (Item item: this.items) {
          count+=item.getQuantity();

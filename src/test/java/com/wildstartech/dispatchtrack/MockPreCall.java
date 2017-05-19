@@ -45,7 +45,7 @@ package com.wildstartech.dispatchtrack;
 
 public class MockPreCall implements PreCall {
    private String confirmationStatus="";
-   private String confirmationStatusText="";
+   private String textConfirmationStatus="";
    
    public MockPreCall() {
       
@@ -62,11 +62,11 @@ public class MockPreCall implements PreCall {
    }
    //***** confirmationStatusText
    @Override
-   public String getConfirmationStatusText() {
-      return this.confirmationStatusText;
+   public String getTextConfirmationStatus() {
+      return this.textConfirmationStatus;
    }
    @Override
-   public void setConfirmationStatusText(String statusText) {
-      this.confirmationStatusText=statusText;
+   public void setTextConfirmationStatus(String statusText) {
+      this.textConfirmationStatus=statusText;
    }
 }
