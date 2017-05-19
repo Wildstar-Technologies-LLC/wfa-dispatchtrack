@@ -41,26 +41,21 @@
  *      derek.berube@wildstartech.com
  *      www.wildstartech.com
  */
-package com.wildstartech.dispatchtrack.spi;
+package com.wildstartech.dispatchtrack.spi.xml;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.wildstartech.dispatchtrack.Localization;
-import com.wildstartech.dispatchtrack.ServiceManager;
 
 /**
  * <h1>Error Code Summary</h1>
@@ -102,12 +97,13 @@ import com.wildstartech.dispatchtrack.ServiceManager;
  * @author Derek Berube, Wildstar Technologies, LLC.
  * @version 0.1
  */
-public abstract class WebWorkerBase {
-   private static final String _CLASS=WebWorkerBase.class.getName();
+public class WebExportActivityWorker extends ExportActivityWorker {
+   private static final String _CLASS=WebExportActivityWorker.class.getName();
    private static final Logger logger=Logger.getLogger(_CLASS);
-   private static final String DATE_FORMAT="yyyy-MM-dd";
    
-   private ServiceManager manager=null;
+   public static final String _RESOURCE_BUNDLE=
+      "com.wildstartech.dispatchtrack.spi.xml.WebExportActivityWorkerMessages";
+   
    private String apiKey="";
    private String code="";
    private String endpoint="";
@@ -115,18 +111,18 @@ public abstract class WebWorkerBase {
    /**
     * Default, no-argument constructor.
     */
-   public WebWorkerBase() {
-      logger.entering(_CLASS, "APIWorkerBase()");
-      logger.exiting(_CLASS, "APIWorkerBase()");      
+   public WebExportActivityWorker() {
+      logger.entering(_CLASS, "WebWorkerBase()");
+      logger.exiting(_CLASS, "WebWorkerBase()");      
    }
    
-   public WebWorkerBase(String endpoint, String apiKey, String code) {
-      logger.entering(_CLASS, "APIWorkerBase(String,String,String)",
+   public WebExportActivityWorker(String endpoint, String apiKey, String code) {
+      logger.entering(_CLASS, "WebWorkerBase(String,String,String)",
             new Object[] {endpoint, apiKey, code});
       setEndPoint(endpoint);
       setApiKey(apiKey);
       setCode(code);
-      logger.exiting(_CLASS, "APIWorkerBase(String,String,String)");
+      logger.exiting(_CLASS, "WebWorkerBase(String,String,String)");
    }
    
    /* ********** BEGIN: Accessor Methods **********/
@@ -216,7 +212,7 @@ public abstract class WebWorkerBase {
       } catch (MalformedURLException ex) {
          msg=Localization.getString(
             "WebWorkerMessages", 
-            WebWorkerMessages.ERR_BAD_ENDPOINT, 
+            WebExportActivityWorkerMessages.ERR_BAD_ENDPOINT, 
             null, 
             null, 
             new Object[] {endpoint});
@@ -226,16 +222,7 @@ public abstract class WebWorkerBase {
       logger.exiting(_CLASS, "buildURL()",webAddress);
       return webAddress;
    }
-   // ********** dateForamt
-   public DateFormat getDateFormat() {
-      logger.entering(_CLASS, "getDateFormat()");
-      DateFormat dFmt=null;
-      
-      dFmt=new SimpleDateFormat(DATE_FORMAT);
-      
-      logger.exiting(_CLASS, "getDateFormat()",dFmt);
-      return dFmt;
-   }
+   
    // ********** parameterMap
    /**
     * Returns a list of additional parameters that should be included in the 
@@ -259,38 +246,19 @@ public abstract class WebWorkerBase {
     */
    public final void doWork() {
       logger.entering(_CLASS, "doWork()");
-      BufferedReader reader=null;
       HttpURLConnection connection=null;
       InputStream in=null;
-      StringBuilder content=null;
       URL url=null;
       
-      url=buildURL();
       
+      url=buildURL();
       try {
          connection=(HttpURLConnection) url.openConnection();
          in=connection.getInputStream();
-         if (in != null) {
-            reader=new BufferedReader(new InputStreamReader(in));
-            while (reader.ready()) {
-               System.out.println(reader.readLine());
-            } // END while (in.ready())
-         } // END if (in != null)
-         try {
-            System.out.println("HttpResponseCode: "+connection.getResponseCode());
-         } catch (IOException ioex) {
-            
-         }
+         parse(in);
+         System.out.println("HttpResponseCode: "+connection.getResponseCode());         
       } catch (IOException ex) {
-         logger.log(
-            Level.SEVERE, 
-            "Error Processing web request.", 
-            ex);
-         try {
-            System.out.println("HttpResponseCode: "+connection.getResponseCode());
-         } catch (IOException ioex) {
-            
-         }
+         ex.printStackTrace();
       } finally {
          if (in != null) {
             try {
@@ -303,4 +271,7 @@ public abstract class WebWorkerBase {
       
       logger.exiting(_CLASS, "doWork()");
    }
+   
+   //********** Temporary
+   
 }

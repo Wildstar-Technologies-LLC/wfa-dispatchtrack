@@ -45,19 +45,31 @@ package com.wildstartech.dispatchtrack;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface ServiceOrder {
+   public String _RESOURCE_BUNDLE=
+      "com.wildstartech.dispatchtrack.ServiceOrderMessages";
+   
    public enum Status {NEW, SCHEDULED, STARTED, UNABLE_TO_START, FINISHED, 
       UNABLE_TO_FINISH};
    public enum ServiceType {DELIVERY,PICKUP,SERVICE};
    
-   //***** accountId
-   public String getAccountId();
-   public void setAccountId(String accountId);
+   //***** account
+   public String getAccount();
+   public void setAccount(String account);
+   
+   //***** additionalFields
+   public Map<String,String> getAdditionalFields();
+   public void setAdditionalFields(Map<String,String> additionalFields);
    
    //***** amount
    public float getAmount();
    public void setAmount(float amount);
+   
+   //***** cod
+   public float getCOD();
+   public void setCOD(float cod);
    
    //***** codAmount
    public float getCODAmount();
@@ -67,6 +79,9 @@ public interface ServiceOrder {
    public Customer getCustomer();
    public void setCustomer(Customer customer);
 
+   //***** deliveredItemQuantity
+   public int getDeliveredItemQuantity();
+   
    //***** deliveryCharge 
    public float getDeliveryCharge();
    public void setDeliveryCharge(float charge);
@@ -74,14 +89,6 @@ public interface ServiceOrder {
    //***** deliveryDate
    public Date getDeliveryDate();
    public void setDeliveryDate(Date deliveryDate);
-   
-   //***** deliveryTimeWIndowStart
-   public Date getDeliveryTimeWindowStart();
-   public void setDeliveryTimeWindowStart(Date windowStart);
-   
-   //***** deliveryTimeWIndowStop
-   public Date getDeliveryTimeWindowStop();
-   public void setDeliveryTimeWindowStop(Date windowStop);
    
    //***** description
    public String getDescription();
@@ -93,19 +100,48 @@ public interface ServiceOrder {
    
    //***** drivers   
    public boolean addDriver(Driver driver);
+   public Driver getDriver(int index);
    public List<Driver> getDrivers();
    public boolean removeDriver(Driver drive);
+   public Driver removeDriver(int index);
+   public Driver setDriver(int index, Driver driver);
+   public void setDrivers(Driver... drivers);
    public void setDrivers(List<Driver> drivers);
+   
+   //***** extra
+   public Map<String,String> getExtra();
+   public void setExtra(Map<String,String> extra);
+   
+   //***** finishedAt
+   public Date getFinishedAt();
+   public void setFinishedAt(Date finishedAt);
    
    //***** id
    public String getId();
    public void setId(String id);
    
+   //***** images
+   public boolean addImage(Image image);
+   public Image getImage(int index);
+   public List<Image> getImages();
+   public Image removeImage(int index);
+   public boolean removeImage(Image image);
+   public Image setImage(int index,Image image);
+   public void setImages(Image... images);
+   public void setImages(List<Image> images);
+   
    //***** items
-   public List<Item> getItems();
-   public void setItems(Item... items);
    public boolean addItem(Item item);
+   public Item getItem(int index);
+   public List<Item> getItems();
+   public Item removeItem(int index);
    public boolean removeItem(Item item);
+   public Item setItem(int index,Item item);
+   public void setItems(Item... items);
+   public void setItems(List<Item> items);   
+   
+   //***** itemCount
+   public int getItemCount();
    
    //***** notes
    public List<Note> getNotes();
@@ -141,9 +177,32 @@ public interface ServiceOrder {
    public String getNumber();
    public void setNumber(String number);
    
+   //***** orderHistory 
+   public boolean addHistoryEvent(HistoryEvent event);
+   public void clearHistoryEvents();
+   public HistoryEvent getHistoryEvent(int index);
+   public List<HistoryEvent> getHistoryEvents();
+   public HistoryEvent removeHistoryEvent(int index);
+   public boolean removeHistoryEvent(HistoryEvent event);
+   public HistoryEvent setHistoryEvent(int index,HistoryEvent event);
+   public void setHistoryEvents(HistoryEvent... events);
+   public void setHistoryEvents(List<HistoryEvent> events);
+   
    //***** origin
    public String getOrigin();
    public void setOrigin(String origin);
+   
+   //***** paymentCollected
+   public float getPaymentCollected();
+   public void setPaymentCollected(float amount);
+   
+   //***** paymentNotes
+   public String getPaymentNotes();
+   public void setPaymentNotes(String paymentNotes);
+   
+   //***** pieces
+   public int getPieces();
+   public void setPieces(int pieces);
    
    //***** preCall
    public PreCall getPreCall();
@@ -158,13 +217,17 @@ public interface ServiceOrder {
    public Date getRequestDeliveryDate();
    public void setRequestDeliveryDate(Date saleDate);
    
-   //***** requestTimeWindowStart
-   public Date getRequestTimeWindowStart();
-   public void setRequestTimeWindowStart(Date windowStart);
+   //***** requestWindowStartTime
+   public Date getRequestWindowStartTime();
+   public void setRequestWindowStartTime(Date windowStart);
    
-   //***** requestTimeWindowStop
-   public Date getRequestTimeWindowStop();
-   public void setRequestTimeWindowStop(Date windowStop);
+   //***** requestTWindowStopTime
+   public Date getRequestWindowEndTime();
+   public void setRequestWindowEndTime(Date windowStop);
+   
+   //***** scheduledAt
+   public Date getScheduledAt();
+   public void setScheduledAt(Date scheduledAt);
    
    //***** serviceType
    public String getServiceType();
@@ -180,9 +243,28 @@ public interface ServiceOrder {
     * Returns the name of the resource or route.
     * @return
     */
-   public String getServiceUnit();
-   public void setServiceUnit(String serviceUnit);
+   public ServiceUnit getServiceUnit();
+   public void setServiceUnit(ServiceUnit serviceUnit);
 
+   //***** shipmentEvents
+   public boolean addShipmentEvent(ShipmentEvent event);
+   public void clearShipmentEvents();
+   public ShipmentEvent getShipmentEvent(int i);
+   public List<ShipmentEvent> getShipmentEvents();
+   public ShipmentEvent removeShipmentEvent(int i);
+   public boolean removeShipmentEvent(ShipmentEvent event);
+   public ShipmentEvent setShipmentEvent(int index, ShipmentEvent event);
+   public void setShipmentEvents(List<ShipmentEvent> events);
+   public void setShipmentEvents(ShipmentEvent... events);
+   
+   //***** signature
+   public Signature getSignature();
+   public void setSignature(Signature signature);
+   
+   //***** startedAt
+   public Date getStartedAt();
+   public void setStartedAt(Date startedAt);
+   
    //***** status
    public Status getStatus();
    public String getStatusLabel();
@@ -201,11 +283,26 @@ public interface ServiceOrder {
    public String getStoreCode();
    public void setStoreCode(String storeCode);
    
+   //***** survey
+   public Survey getSurvey();
+   public void setSurvey(Survey survey);
+   
    //***** taxes 
    public float getTaxes();
    public void setTaxes(float taxes);
    
+   //***** timeWindowEnd
+   public Date getTimeWindowEnd();
+   public void setTimeWindowEnd(Date timeWindowEnd);
+   
+   //***** timeWindowStart
+   public Date getTimeWindowStart();
+   public void setTimeWindowStart(Date timeWindowStart);
+   
+   //***** totalItemQuantity
+   public int getTotalItemQuantity();
+   
    //***** truckId
-   public String getTruckId();
-   public void setTruckId(String truckId);
+   public Truck getTruck();
+   public void setTruck(Truck truck);
 }

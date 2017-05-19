@@ -47,8 +47,6 @@ public class MockCustomer implements Customer {
    private float latitude=0f;
    private float longitude=0f;
    
-   private short zip=0;
-   
    private String address1="";
    private String address2="";
    private String city="";
@@ -58,8 +56,8 @@ public class MockCustomer implements Customer {
    private String lastName="";
    private String phone1="";
    private String phone2="";
-   private String phone3="";
    private String state="";
+   private String zip="";
    
    /**
     * Default, no-argument constructor
@@ -178,17 +176,7 @@ public class MockCustomer implements Customer {
    public void setPhone2(String phoneNumber) {
       this.phone2=phoneNumber;
    }
-
-   //***** phone3
-   @Override
-   public String getPhone3() {
-      return this.phone3;
-   }
-   @Override
-   public void setPhone3(String phoneNumber) {
-      this.phone3=phoneNumber;
-   }
-   
+  
    //***** state
    @Override
    public String getState() {
@@ -201,11 +189,11 @@ public class MockCustomer implements Customer {
 
    //***** zip
    @Override
-   public short getZip() {
+   public String getZip() {
       return this.zip;
    }
    @Override
-   public void setZip(short zip) {
+   public void setZip(String zip) {
       this.zip=zip;
    }
 }

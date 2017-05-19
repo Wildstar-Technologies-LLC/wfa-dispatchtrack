@@ -63,6 +63,7 @@ public class ServiceOrderMessages extends ListResourceBundle {
          {STATUS_LABEL_FINISHED,"Finished"},
          {STATUS_LABEL_NEW,"New"},
          {STATUS_LABEL_SCHEDULED,"Scheduled"},
+         {STATUS_LABEL_STARTED,"Started"},
          {STATUS_LABEL_UNABLE_TO_START,"Unable To Start"},
          {STATUS_LABEL_UNABLE_TO_FINISH,"Unable To Finish"}
       };

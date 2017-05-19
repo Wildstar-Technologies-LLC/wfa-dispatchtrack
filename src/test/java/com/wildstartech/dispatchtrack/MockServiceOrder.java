@@ -47,54 +47,80 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class MockServiceOrder implements ServiceOrder {
    private float amount=0f;
+   private float cod=0f;
    private float codAmount=0f;
    private float deliveryCharge=0f;
+   private float paymentCollected=0f;
    private float taxes=0f;
    
+   private int pieces=0;
    private int serviceTime=0;
    private int stopNumber=0;
    
    private Customer customer=new MockCustomer();
    
    private Date deliveryDate=null;
-   private Date deliveryTimeWindowStart=null;
-   private Date deliveryTimeWindowStop=null;
+   private Date finishedAt=null;
    private Date requestDeliveryDate=null;
-   private Date requestTimeWindowStart=null;
-   private Date requestTimeWindowStop=null;
+   private Date requestWindowStartTime=null;
+   private Date requestWindowEndTime=null;
+   private Date scheduledAt=null;
+   private Date startedAt=null;
+   private Date timeWindowEnd=null;
+   private Date timeWindowStart=null;
    
    private List<Driver> drivers=null;
+   private List<HistoryEvent> historyEvents=null;
+   private List<Image> images=null;
    private List<Item> items=null;
    private List<Note> notes=null;
+   private List<ShipmentEvent> events=null;
    private List<String> prerequisiteOrderIds=null;
    
+   private Map<String,String> additionalFields=null;
+   private Map<String,String> extra=null;
+   
    private PreCall preCall=null;
+   
+   private ServiceUnit serviceUnit=null;
+   
+   private Signature signature=null;
+   
    private Status status=Status.NEW;
-   private String accountId="";
+   private String account="";
    private String description="";
    private String displayOrderNumber="";
-   private String driverId="";
    private String id="";
    private String number="";
    private String origin="";
+   private String paymentNotes="";
    private String serviceType="";
-   private String serviceUnit="";
    private String stopTime="";
    private String storeCode="";
-   private String truckId="";
+   
+   private Survey survey=null;
+   
+   private Truck truck=null;
    
    /**
     * Default, no-argument constructor
     */
    public MockServiceOrder() {
-      this.preCall=new MockPreCall();
+      this.customer=new MockCustomer();
       this.drivers=new ArrayList<Driver>();
+      this.events=new ArrayList<ShipmentEvent>();
+      this.historyEvents=new ArrayList<HistoryEvent>();
+      this.images=new ArrayList<Image>();
       this.items=new ArrayList<Item>();
       this.notes=new ArrayList<Note>();
-      this.prerequisiteOrderIds=new ArrayList<String>();
+      this.preCall=new MockPreCall();
+      this.prerequisiteOrderIds=new ArrayList<String>(); 
+      this.serviceUnit=new MockServiceUnit();
+      this.signature=new MockSignature();
    }
    /* ********** Utility Methods **********/
    /**
@@ -132,14 +158,24 @@ public class MockServiceOrder implements ServiceOrder {
    /* ********** Accessor Methods **********/
    //***** accountId
    @Override
-   public String getAccountId() {
-      return this.accountId;
+   public String getAccount() {
+      return this.account;
    }
    @Override
-   public void setAccountId(String accountId) {
-      this.accountId=accountId;
+   public void setAccount(String accountId) {
+      this.account=accountId;
    }
 
+   //***** additionalFields
+   @Override
+   public Map<String,String> getAdditionalFields() {
+      return this.additionalFields;
+   }
+   @Override
+   public void setAdditionalFields(Map<String,String> additionalFields) {
+      this.additionalFields=additionalFields;
+   }
+   
    //***** amount
    @Override
    public float getAmount() {
@@ -148,6 +184,16 @@ public class MockServiceOrder implements ServiceOrder {
    @Override
    public void setAmount(float amount) {
       this.amount=amount;
+   }
+   
+ //***** cod
+   @Override
+   public float getCOD() {
+      return this.cod;
+   }
+   @Override
+   public void setCOD(float cod) {
+      this.cod=cod;
    }
    
    //***** codAmount
@@ -171,6 +217,16 @@ public class MockServiceOrder implements ServiceOrder {
       this.customer=customer;
    }
 
+   //***** deliveredItemQuantity
+   @Override
+   public int getDeliveredItemQuantity() {
+      int count=0;
+      for (Item item: this.items) {
+         count+=item.getDeliveredQuantity();
+      } // END for (Item item: this.items)
+      return count;
+   }
+   
    //***** deliveryCharge
    @Override
    public float getDeliveryCharge() {
@@ -190,26 +246,6 @@ public class MockServiceOrder implements ServiceOrder {
    @Override
    public void setDeliveryDate(Date deliveryDate) {
       this.deliveryDate=deliveryDate;
-   }
-
-   //***** deliveryTimeWindowStart
-   @Override
-   public Date getDeliveryTimeWindowStart() {
-      return this.deliveryTimeWindowStart;
-   }
-   @Override
-   public void setDeliveryTimeWindowStart(Date windowStart) {
-      this.deliveryTimeWindowStart=windowStart;
-   }
-
-   //***** deliveryTimeWindowStop
-   @Override
-   public Date getDeliveryTimeWindowStop() {
-      return this.deliveryTimeWindowStop;
-   }
-   @Override
-   public void setDeliveryTimeWindowStop(Date windowStop) {
-      this.deliveryTimeWindowStop=windowStop;
    }
 
    //***** description
@@ -233,11 +269,11 @@ public class MockServiceOrder implements ServiceOrder {
    //***** driver
    @Override
    public boolean addDriver(Driver driver) {
-      boolean result=false;
-      if (driver != null) {
-         result=this.drivers.add(driver);
-      } // END if (driver != null)
-      return result;
+      return this.drivers.add(driver);
+   }
+   @Override
+   public Driver getDriver(int index) {
+      return this.drivers.get(index);
    }
    @Override
    public List<Driver> getDrivers() {
@@ -252,11 +288,45 @@ public class MockServiceOrder implements ServiceOrder {
       return result;
    }
    @Override
+   public Driver removeDriver(int index) {
+      return this.drivers.remove(index);
+   }
+   @Override
+   public Driver setDriver(int index, Driver driver) {
+      return this.drivers.remove(index);
+   }
+   @Override
+   public void setDrivers(Driver...drivers) {
+      if (drivers != null) {
+         for (Driver driver: drivers) {
+            this.drivers.add(driver);
+         } // END for (Driver driver: drivers) 
+      } // END if (drivers != null)
+   }
+   @Override
    public void setDrivers(List<Driver> drivers) {
       this.drivers.clear();
       if ((drivers != null) && (drivers.size() > 0)) {
          this.drivers.addAll(drivers);
       } // END if ((drivers != null) && (drivers.size() > 0))
+   }
+   
+   //***** extra
+   @Override
+   public Map<String,String> getExtra() {
+      return this.extra;
+   }
+   @Override
+   public void setExtra(Map<String,String> extra) {
+      this.extra=extra;
+   }
+   
+   //***** finishedAt
+   public Date getFinishedAt() {
+      return this.finishedAt;
+   }
+   public void setFinishedAt(Date finishedAt) {
+      this.finishedAt=finishedAt;
    }
    
    //***** id
@@ -267,9 +337,96 @@ public class MockServiceOrder implements ServiceOrder {
       this.id=id;
    }
    
+   //***** itemCount
+   @Override
+   public int getItemCount() {
+      return this.items.size();
+   }
+   
+   //***** images
+   @Override
+   public boolean addImage(Image image) {
+      boolean result=false;
+      if (image != null) {
+         result=this.images.add(image);
+      } // END if (image != null)
+      return result;
+   }
+   @Override
+   public Image getImage(int index) {
+      Image image=null;
+      image=this.images.get(index);
+      return image;
+   }
+   
+   @Override
+   public List<Image> getImages() {
+      List<Image> newList=null;
+      newList=Collections.unmodifiableList(this.images);
+      return newList;
+   }
+   @Override
+   public Image removeImage(int index) {
+      Image image=null;
+      image=this.images.remove(index);
+      return image;
+   }
+   @Override
+   public boolean removeImage(Image image) {
+      boolean result=false;
+      if (image != null) {
+         result=this.images.remove(image);
+      } // END if (image != null)
+      return result;
+   }
+   @Override 
+   public Image setImage(int index, Image image) {
+      Image result=null;
+      result=this.images.set(index, image);
+      return result;
+   }
+   @Override
+   public void setImages(Image... images) {
+      this.images.clear();
+      if (images != null) {
+         for (Image image: images) {
+            this.images.add(image);
+         } // END for (Image image: images)
+      } // END if (images != null)
+   }
+   @Override
+   public void setImages(List<Image> images) {
+      this.images.clear();
+      this.images.addAll(images);
+   }
+   
    //***** items
+   public boolean addItem(Item item) {
+      boolean result=false;
+      if (item != null) {
+         result=this.items.add(item);
+      } // END if (item != null)
+      return result;
+   }
+   @Override
+   public Item getItem(int index) {
+      return this.items.get(index);
+   }
    public List<Item> getItems() {
-      return Collections.unmodifiableList(this.items);
+      return this.items;
+   }
+   @Override
+   public Item removeItem(int index) {
+      
+      return this.items.remove(index);
+   }
+   @Override
+   public boolean removeItem(Item item) {
+      return this.items.remove(item);
+   }
+   @Override 
+   public Item setItem(int index, Item item) {
+      return this.items.set(index, item);
    }
    public void setItems(Item... items) {
       this.items.clear();
@@ -279,21 +436,11 @@ public class MockServiceOrder implements ServiceOrder {
          } // END for (Item item: items)
       } // END if (items != null)
    }
-   public boolean addItem(Item item) {
-      boolean result=false;
-      if (item != null) {
-         result=this.items.add(item);
-      } // END if (item != null)
-      return result;
+   @Override
+   public void setItems(List<Item> items) {
+      this.items.clear();
+      this.items.addAll(items);      
    }
-   public boolean removeItem(Item item) {
-      boolean result=false;
-      if (item != null) {
-         result=this.items.remove(item);
-      } // END if (item != null)
-      return result;
-   }
-   
    //***** notes
    @Override
    public List<Note> getNotes() {
@@ -338,6 +485,52 @@ public class MockServiceOrder implements ServiceOrder {
    public void setNumber(String number) {
       this.number=number;
    }
+   
+ //***** orderHistory 
+   @Override
+   public boolean addHistoryEvent(HistoryEvent event) {
+      return this.historyEvents.add(event);
+   }
+   
+   @Override
+   public void clearHistoryEvents() {
+      this.historyEvents.clear();
+   }
+  
+   @Override
+   public HistoryEvent getHistoryEvent(int index) {
+      return this.historyEvents.get(index);
+   }
+   @Override
+   public List<HistoryEvent> getHistoryEvents() {
+      return Collections.unmodifiableList(this.historyEvents);
+   }
+   @Override
+   public HistoryEvent removeHistoryEvent(int index) {
+      return this.historyEvents.remove(index);
+   }
+   @Override
+   public boolean removeHistoryEvent(HistoryEvent event) {
+      return this.historyEvents.remove(event);
+   }
+   @Override
+   public HistoryEvent setHistoryEvent(int index,HistoryEvent event) {
+      return this.historyEvents.set(index,event);
+   }
+   @Override
+   public void setHistoryEvents(HistoryEvent... events) {
+      if (events != null) {
+         clearHistoryEvents();
+         for (HistoryEvent event: events) {
+            this.historyEvents.add(event);
+         } // END for (HistoryEvent event: events)
+      } // END if (events != null)
+   }
+   @Override
+   public void setHistoryEvents(List<HistoryEvent> events) {
+      clearHistoryEvents();
+      this.historyEvents.addAll(events);
+   }
 
    //***** origin
    @Override
@@ -348,6 +541,33 @@ public class MockServiceOrder implements ServiceOrder {
    public void setOrigin(String origin) {
       this.origin=origin;
    }
+   
+   //***** paymentCollected
+   public float getPaymentCollected() {
+      return this.paymentCollected;
+   }
+   public void setPaymentCollected(float amount) {
+      this.paymentCollected=amount;
+   }
+   
+   //***** paymentNotes
+   public String getPaymentNotes() {
+      return this.paymentNotes;
+   }
+   public void setPaymentNotes(String paymentNotes) {
+      this.paymentNotes=paymentNotes;
+   }
+   
+   //***** pieces
+   @Override
+   public int getPieces() {
+      return this.pieces;
+   }
+   @Override
+   public void setPieces(int count) {
+      this.pieces=count;      
+   }
+   
    //***** preCall
    @Override
    public PreCall getPreCall() {
@@ -381,24 +601,24 @@ public class MockServiceOrder implements ServiceOrder {
       this.requestDeliveryDate=saleDate;
    }
 
-   //***** requestTimeWindowStart
+   //***** requestWindowStartTime
    @Override
-   public Date getRequestTimeWindowStart() {
-      return this.requestTimeWindowStart;
+   public Date getRequestWindowStartTime() {
+      return this.requestWindowStartTime;
    }
    @Override
-   public void setRequestTimeWindowStart(Date windowStart) {
-      this.requestTimeWindowStart=windowStart;
+   public void setRequestWindowStartTime(Date windowStart) {
+      this.requestWindowStartTime=windowStart;
    }
 
-   //***** requestTimeWindowStop
+   //***** requestWindowStopTime
    @Override
-   public Date getRequestTimeWindowStop() {
-      return this.requestTimeWindowStop;
+   public Date getRequestWindowEndTime() {
+      return this.requestWindowEndTime;
    }
    @Override
-   public void setRequestTimeWindowStop(Date windowStop) {      
-      this.requestTimeWindowStop=windowStop;
+   public void setRequestWindowEndTime(Date windowStop) {      
+      this.requestWindowEndTime=windowStop;
    }
    
    //***** serviceType
@@ -417,6 +637,16 @@ public class MockServiceOrder implements ServiceOrder {
       return this.serviceType;
    }
    
+   //***** scheduledAt
+   @Override
+   public Date getScheduledAt() {
+      return this.scheduledAt;
+   }
+   @Override
+   public void setScheduledAt(Date date) {
+      this.scheduledAt=date;
+   }
+   
    //***** serviceTime
    @Override
    public int getServiceTime() {
@@ -429,14 +659,107 @@ public class MockServiceOrder implements ServiceOrder {
    
    //***** serviceUnit
    @Override
-   public String getServiceUnit() {
+   public ServiceUnit getServiceUnit() {
       return this.serviceUnit;
    }
    @Override
-   public void setServiceUnit(String serviceUnit) {
+   public void setServiceUnit(ServiceUnit serviceUnit) {
       this.serviceUnit=serviceUnit;
    }
 
+ //***** shipmentEvents
+   @Override
+   public boolean addShipmentEvent(ShipmentEvent event) {
+      return this.events.add(event);
+   }
+   @Override
+   public void clearShipmentEvents() {
+      this.events.clear();      
+   }
+   @Override
+   public ShipmentEvent getShipmentEvent(int i) {
+      int numberOfEvents=0;
+      ShipmentEvent event=null;
+      
+      numberOfEvents=this.events.size();
+      if (i >= numberOfEvents) {
+         i=numberOfEvents - 1;
+      }  // END if (i >= numberOfEvents)
+      if (i < 0) {
+         i=0;
+      } // END if (i < 0) 
+      if (numberOfEvents > 0) {
+         event=this.events.get(i);
+      } // END if (numberOfEvents > 0)    
+      return event;
+   }
+   @Override
+   public List<ShipmentEvent> getShipmentEvents() {
+      List<ShipmentEvent> events=null;
+      events=Collections.unmodifiableList(this.events);
+      return events;
+   }
+   @Override 
+   public ShipmentEvent removeShipmentEvent(int i) {
+      int numberOfEvents=0;
+      ShipmentEvent event=null;
+      
+      numberOfEvents=this.events.size();
+      if ((i > numberOfEvents -1) || (i < 0)) {
+         throw new IndexOutOfBoundsException();
+      } // END if ((i > numberOfEvents -1) || (i < 0))
+      event=this.events.remove(i);
+      return event;
+   }
+   @Override
+   public boolean removeShipmentEvent(ShipmentEvent event) {
+      boolean result=false;
+      result=this.events.remove(event);
+      return result;
+   }
+   @Override
+   public ShipmentEvent setShipmentEvent(int index, ShipmentEvent event) {
+      return this.events.set(index, event);
+   }
+   @Override
+   public void setShipmentEvents(ShipmentEvent...events) {
+      if (events != null) {
+         for(ShipmentEvent event: events) {
+            addShipmentEvent(event);
+         } // END for(ShipmentEvent event: events)
+      } else {
+         this.events.clear();
+      } // END if (events != null)
+   }
+   @Override
+   public void setShipmentEvents(List<ShipmentEvent> events) {
+      if (events != null) {
+         for(ShipmentEvent event: events) {
+            addShipmentEvent(event);
+         } // END for(ShipmentEvent event: events)
+      } else {
+         this.events.clear();
+      } // END if (events != null)
+   }
+   
+   //***** signature
+   @Override
+   public Signature getSignature() {
+      return this.signature;
+   }
+   @Override
+   public void setSignature(Signature signature) {
+      this.signature=signature;      
+   }
+   
+   //***** startedAt
+   public Date getStartedAt() {
+      return this.startedAt;
+   }
+   public void setStartedAt(Date startedAt) {
+      this.startedAt=startedAt;
+   }
+   
    //***** status
    @Override
    public Status getStatus() {
@@ -501,6 +824,16 @@ public class MockServiceOrder implements ServiceOrder {
       this.storeCode=storeCode;
    }
 
+   //***** survey
+   @Override
+   public Survey getSurvey() {
+      return this.survey;
+   }
+   @Override
+   public void setSurvey(Survey survey) {
+      this.survey=survey;      
+   }
+   
    //***** taxes
    @Override
    public float getTaxes() {
@@ -511,13 +844,38 @@ public class MockServiceOrder implements ServiceOrder {
       this.taxes=taxes;
    }
 
-   //***** truckId
+   //***** timeWindowStart
+   public Date getTimeWindowStart() {
+      return this.timeWindowStart;
+   }
+   public void setTimeWindowStart(Date timeWindowStart) {
+      this.timeWindowStart=timeWindowStart;
+   }
+   
+   //***** timeWindowStop
+   public Date getTimeWindowEnd() {
+      return this.timeWindowEnd;
+   }
+   public void setTimeWindowEnd(Date timeWindowEnd) {
+      this.timeWindowEnd=timeWindowEnd;      
+   }
+   
+   //***** totalItemQuantity
    @Override
-   public String getTruckId() {
-      return this.truckId;
+   public int getTotalItemQuantity() {
+      int count=0;
+      for (Item item: this.items) {
+         count+=item.getQuantity();
+      } // END for (Item item: this.items)
+      return count;
+   }
+   //***** truck
+   @Override
+   public Truck getTruck() {
+      return this.truck;
    }
    @Override
-   public void setTruckId(String truckId) {
-      this.truckId=truckId;
+   public void setTruck(Truck truck) {
+      this.truck=truck;
    }
 }

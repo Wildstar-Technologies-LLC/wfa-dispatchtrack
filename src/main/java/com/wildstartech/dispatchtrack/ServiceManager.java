@@ -53,11 +53,12 @@ import java.util.Properties;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import com.wildstartech.dispatchtrack.spi.ServiceManagerImpl;
+import com.wildstartech.dispatchtrack.spi.xml.ServiceManagerImpl;
 /**
  * Primary interface gateway between DispatchTrack and API clients.
  * 
  * @author Derek Berube, Wildstar Technologies, LLC.
+ * @version 0.1, 2017.01.17
  */
 public abstract class ServiceManager {
    private static final String _CLASS=ServiceManager.class.getName();
@@ -550,19 +551,20 @@ public abstract class ServiceManager {
    /**
     * Retrieves a list of service orders for the specified {@code activityDate}.
     * 
-    * @param activityDate The date on which orders are supposed to be either 
-    * delivered or picked up.  This is a required parameter.
-    * @param serviceUnit Filter the list of service orders based upon the 
-    * resource that will be performing the service.  This is an optional 
+    * @param {@code activityDate} The date on which orders are supposed to be 
+    * either delivered or picked up.  This is a required parameter.
+    * @param {@code serviceUnit} Filter the list of service orders based upon
+    * the resource that will be performing the service.  This is an optional 
     * parameter.
-    * @param serviceType Filter the list of service orders returned based upon
-    * the type of service (Delivery, Service or Pickup) being performed. THis
-    * is an optional parameter.
-    * @param account Filter the list of service orders returned based upon 
-    * the account number associated with the ticket.  This is an optional 
+    * @param {@code serviceType} Filter the list of service orders returned 
+    * based upon the type of service ({@code Delivery}, {@code Service}
+    * or {@code Pickup}) being 
+    * performed. This is an optional parameter.
+    * @param {@code account} Filter the list of service orders returned based
+    * upon the account number associated with the ticket.  This is an optional 
     * parameter.
-    * @param status Filter the list of service orders returned based upon
-    * the current status of the order in the system.  This is an optional
+    * @param {@code status} Filter the list of service orders returned based 
+    * upon the current status of the order in the system.  This is an optional
     * parameter.
     * 
     * @return The list of {@code ServiceOrder} objects that match the specified

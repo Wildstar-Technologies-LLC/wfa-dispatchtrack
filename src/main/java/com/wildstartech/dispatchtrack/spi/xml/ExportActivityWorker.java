@@ -41,13 +41,25 @@
  *      derek.berube@wildstartech.com
  *      www.wildstartech.com
  */
-package com.wildstartech.dispatchtrack.spi;
+package com.wildstartech.dispatchtrack.spi.xml;
 
+import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
+import com.wildstartech.dispatchtrack.Localization;
+import com.wildstartech.dispatchtrack.ServiceOrder;
+import com.wildstartech.dispatchtrack.spi.xml.serviceorder.ServiceOrdersXMLFactory;
 
 /**
  * Manages the logic required to invoke and process the results of the API call
@@ -69,9 +81,10 @@ import java.util.logging.Logger;
  * @author Derek Berube, Wildstar Technologies, LLC.
  * @version 0.1
  */
-public class ExportActivityWorker extends WebWorkerBase {
+public abstract class ExportActivityWorker {
    private static final String _CLASS=ExportActivityWorker.class.getName();
    private static final Logger logger=Logger.getLogger(_CLASS);
+   private static final String DATE_FORMAT="yyyy-MM-dd";   
    
    private Date activityDate;
    
@@ -82,6 +95,36 @@ public class ExportActivityWorker extends WebWorkerBase {
       super();
       logger.entering(_CLASS, "ExportActivityWorker()");
       logger.exiting(_CLASS, "ExportActivityWorker()");
+   }
+   
+   public List<ServiceOrder> parse(InputStream in) {
+      logger.entering(_CLASS, "parse(InputStream)",in);
+      List<ServiceOrder> serviceOrders=null;
+      ServiceOrdersXMLFactory listFactory=null;
+      String msg=null;
+      XMLInputFactory xmlFactory=null;
+      XMLStreamReader reader=null;
+      try {
+         if (in != null) {
+            xmlFactory=XMLInputFactory.newInstance();
+            reader=xmlFactory.createXMLStreamReader(in);
+            listFactory=new ServiceOrdersXMLFactory();
+            while(reader.hasNext()) {
+               serviceOrders=listFactory.parse(reader);               
+            } // END while(reader.hasNext()) 
+            reader.close();
+         } // END if (in != null)         
+      } catch (XMLStreamException ex) {
+         msg=Localization.getString(
+               WebExportActivityWorker._RESOURCE_BUNDLE, 
+               WebExportActivityWorkerMessages.ERR_XML_STREAM, 
+               null, 
+               null, 
+               null);
+         logger.log(Level.SEVERE,msg,ex);
+      } // END try/catch
+      logger.exiting(_CLASS, "parse(InputStream)",serviceOrders);
+      return serviceOrders;
    }
    
    /**
@@ -109,6 +152,17 @@ public class ExportActivityWorker extends WebWorkerBase {
    }
    
    /* ***** Utility Methods *****/   
+   // ********** dateForamt
+   public DateFormat getDateFormat() {
+      logger.entering(_CLASS, "getDateFormat()");
+      DateFormat dFmt=null;
+      
+      dFmt=new SimpleDateFormat(DATE_FORMAT);
+      
+      logger.exiting(_CLASS, "getDateFormat()",dFmt);
+      return dFmt;
+   }
+   
    public Map<String,String> getParameterMap() {
       logger.entering(_CLASS, "getParameterMap()");
       Date activityDate=null;

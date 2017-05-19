@@ -41,15 +41,20 @@
  *      derek.berube@wildstartech.com
  *      www.wildstartech.com
  */
-package com.wildstartech.dispatchtrack.spi;
+package com.wildstartech.dispatchtrack.spi.xml;
 
 import java.util.ListResourceBundle;
 
-public class WebWorkerMessages  extends ListResourceBundle {
+public class WebExportActivityWorkerMessages  extends ListResourceBundle {
    public static final String ERR_BAD_ENDPOINT="ERR_BAD_ENDPOINT";
+   public static final String ERR_IO_EXCEPTION="ERR_IO_EXCEPTION";
+   public static final String ERR_XML_STREAM="ERR_XML_STREAM";
+   
    public Object[][] getContents() {
       return new Object[][] {
-         {ERR_BAD_ENDPOINT,"The specified web address, \"{0}\" is not a well-formed web address (URL)."}         
+         {ERR_BAD_ENDPOINT,"The specified web address, \"{0}\" is not a well-formed web address (URL)."},
+         {ERR_IO_EXCEPTION,"Error processing web request."},
+         {ERR_XML_STREAM,"Error processing XML stream."}
       };
    }
 }

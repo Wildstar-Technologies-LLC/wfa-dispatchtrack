@@ -44,9 +44,9 @@
 package com.wildstartech.dispatchtrack;
 
 public interface Driver {
-   public String getDriverId();
-   public void setDriverId(String driverId);
+   public String getId();
+   public void setId(String id);
 
-   public String getDriverName();
-   public void setDriverName(String driverName);
+   public String getName();
+   public void setName(String name);
 }

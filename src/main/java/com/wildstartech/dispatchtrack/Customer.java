@@ -60,10 +60,7 @@ public interface Customer {
    public void setPhone1(String phoneNumber);
    
    public String getPhone2();
-   public void setPhone2(String phoneNumber);
-   
-   public String getPhone3();
-   public void setPhone3(String phoneNumber);
+   public void setPhone2(String phoneNumber);   
    
    public String getAddress1();
    public void setAddress1(String address1);
@@ -77,8 +74,8 @@ public interface Customer {
    public String getState();
    public void setState(String state);
    
-   public short getZip();
-   public void setZip(short zip);
+   public String getZip();
+   public void setZip(String zip);
    
    public float getLatitude();
    public void setLatitude(float latitude);

@@ -43,27 +43,38 @@
  */
 package com.wildstartech.dispatchtrack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MockItem implements Item {
    private boolean countalbe=false;
-
+   private boolean delivered=false;
+   
+   private int deliveredQuantity=0;
    private int quantity=0;
+   private int saleSequence=0;
    private int setupTime=0;
    
    private float cube=0f;
    private float weight=0f;
 
+   private List<ReturnCode> returnCodes=null;
+   
    private String description="";
    private String itemId="";
+   private String itemNotes="";
    private String location="";
-   private String saleSequence="";
+   private String notes="";
+   private String number="";
    private String serialNumber="";
    private String storeCode="";
+   private String warehouseNotes="";
    
    /**
     * Default, no-argument constructor.
     */
    public MockItem() {
-      
+      this.returnCodes=new ArrayList<ReturnCode>();
    }
    
    //***** countable
@@ -86,6 +97,26 @@ public class MockItem implements Item {
       this.cube=cube;
    }
 
+   //***** delivered
+   @Override
+   public boolean isDelivered() {
+      return this.delivered;
+   }
+   @Override
+   public void setDelivered(boolean value) {
+      this.delivered=value;
+   }
+   
+   //***** deliveredQuantity
+   @Override
+   public int getDeliveredQuantity() {
+      return this.deliveredQuantity;
+   }
+   @Override
+   public void setDeliveredQuantity(int quantity) {
+      this.deliveredQuantity=quantity;
+   }
+   
    //***** description
    @Override
    public String getDescription() {
@@ -107,6 +138,16 @@ public class MockItem implements Item {
       this.itemId=itemId;
    }
 
+   //***** itemNotes
+   @Override
+   public String getItemNotes() {
+      return this.itemNotes;
+   }
+   @Override
+   public void setItemNotes(String notes) {
+      this.itemNotes=notes;      
+   }
+   
    //***** location
    @Override
    public String getLocation() {
@@ -116,7 +157,24 @@ public class MockItem implements Item {
    public void setLocation(String location) {
       this.location=location;
    }
+   
+  //***** notes
+   @Override
+   public String getNotes() {
+      return this.notes;
+   }
+   @Override
+   public void setNotes(String notes) {
+      this.notes=notes;      
+   }
 
+   //***** number
+   public String getNumber() {
+      return this.number;
+   }
+   public void setNumber(String number) {
+      this.number=number;      
+   }
    //***** quantity
    @Override
    public int getQuantity() {
@@ -127,13 +185,50 @@ public class MockItem implements Item {
       this.quantity=quantity;
    }
 
+ //***** returnCodes
+   public boolean addReturnCode(ReturnCode code) {
+      return this.returnCodes.add(code);
+   }
+   public void clearReturnCodes() {
+      this.returnCodes.clear();
+   }
+   public ReturnCode getReturnCode(int index) {
+      return this.returnCodes.get(index);
+   }
+   public List<ReturnCode> getReturnCodes() {
+      return this.returnCodes;
+   }
+   public ReturnCode removeReturnCode(int index) {
+      return this.returnCodes.get(index);
+   }
+   public boolean removeReturnCode(ReturnCode code) {
+      return this.returnCodes.remove(code);
+   }
+   public ReturnCode setReturnCode(int index,ReturnCode code) {
+      return this.returnCodes.set(index,code);
+   }
+   public void setReturnCodes(ReturnCode... codes) {
+      if (codes != null) {
+         clearReturnCodes();
+         for (ReturnCode code: codes) {
+            this.returnCodes.add(code);
+         } // END for (ReturnCode code: codes)
+      } // END if (codes != null)      
+   }
+   public void setReturnCodes(List<ReturnCode> codes) {
+      if (codes != null) {
+         clearReturnCodes();
+         this.returnCodes.addAll(codes);         
+      } // END if (codes != null)      
+   }
+   
    //***** saleSequence
    @Override
-   public String getSaleSequence() {
+   public int getSaleSequence() {
       return this.saleSequence;
    }
    @Override
-   public void setSaleSequence(String saleSequence) {
+   public void setSaleSequence(int saleSequence) {
       this.saleSequence=saleSequence;
    }
 
@@ -165,6 +260,16 @@ public class MockItem implements Item {
    @Override
    public void setStoreCode(String storeCode) {
       this.storeCode=storeCode;
+   }
+   
+   //***** warehouseNotes
+   @Override
+   public String getWarehouseNotes() {
+      return this.warehouseNotes;
+   }
+   @Override
+   public void setWarehouseNotes(String notes) {
+      this.warehouseNotes=notes;      
    }
 
    //****** weight

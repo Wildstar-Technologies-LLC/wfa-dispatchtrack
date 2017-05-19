@@ -41,7 +41,7 @@
  *      derek.berube@wildstartech.com
  *      www.wildstartech.com
  */
-package com.wildstartech.dispatchtrack.spi;
+package com.wildstartech.dispatchtrack.spi.xml;
 
 import java.util.ArrayList;
 import java.util.Date;

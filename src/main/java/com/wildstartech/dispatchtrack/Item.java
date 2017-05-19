@@ -43,6 +43,8 @@
  */
 package com.wildstartech.dispatchtrack;
 
+import java.util.List;
+
 public interface Item {         
    //***** countable
    public boolean isCountable();
@@ -52,6 +54,14 @@ public interface Item {
    public float getCube();
    public void setCube(float cube);
 
+   //***** delivered
+   public boolean isDelivered();
+   public void setDelivered(boolean value);
+   
+   //***** deliveredQuantity
+   public int getDeliveredQuantity();
+   public void setDeliveredQuantity(int quantity);
+   
    //***** description
    public String getDescription();
    public void setDescription(String description);
@@ -64,13 +74,36 @@ public interface Item {
    public String getLocation();
    public void setLocation(String location);
 
+   //***** itemNotes
+   public String getItemNotes();
+   public void setItemNotes(String ntoes);
+   
+   //***** notes
+   public String getNotes();
+   public void setNotes(String notes);
+   
+   //***** number
+   public String getNumber();
+   public void setNumber(String number);
+   
    //*****quantity
    public int getQuantity();
    public void setQuantity(int quantity);
    
+   //***** returnCode
+   public boolean addReturnCode(ReturnCode code);
+   public void clearReturnCodes();
+   public ReturnCode getReturnCode(int index);
+   public List<ReturnCode> getReturnCodes();
+   public ReturnCode removeReturnCode(int index);
+   public boolean removeReturnCode(ReturnCode code);
+   public ReturnCode setReturnCode(int index,ReturnCode code);
+   public void setReturnCodes(ReturnCode... codes);
+   public void setReturnCodes(List<ReturnCode> codes);
+   
    //***** saleSequence
-   public String getSaleSequence();
-   public void setSaleSequence(String saleSequence);   
+   public int getSaleSequence();
+   public void setSaleSequence(int saleSequence);   
 
    //***** serialNumber
    public String getSerialNumber();
@@ -83,6 +116,10 @@ public interface Item {
    //***** storeCode
    public String getStoreCode();
    public void setStoreCode(String storeCode);
+   
+   //***** warehouseNotes
+   public String getWarehouseNotes();
+   public void setWarehouseNotes(String notes);
    
    //***** weight
    public float getWeight();

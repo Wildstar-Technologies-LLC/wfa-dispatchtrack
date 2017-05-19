@@ -40,6 +40,11 @@ public class Localization {
          locale=Locale.getDefault();
       } // END if (locale == null)
       
+      // If the classloader is not specified, then get the default
+      if (cl == null) {
+         cl=Localization.class.getClassLoader();
+      } // END if (cl == null) 
+      
       if (bundleName != null) {
          bundle=ResourceBundle.getBundle(bundleName,locale,cl);
          if (bundle != null) {

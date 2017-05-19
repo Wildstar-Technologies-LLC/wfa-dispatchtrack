@@ -43,6 +43,18 @@
  */
 package com.wildstartech.dispatchtrack;
 
-public interface Image {
+import java.util.Date;
 
+public interface Image {
+   //**** date
+   public Date getCreatedAt();
+   public void setCreatedAt(Date date);
+   
+   //**** source
+   public String getSource();
+   public void setSource(String source);
+   
+   //****
+   public String getThumbnail();
+   public void setThumbnail(String thumbnail);
 }
