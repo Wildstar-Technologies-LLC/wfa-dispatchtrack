@@ -211,7 +211,7 @@ public class WebExportActivityWorker extends ExportActivityWorker {
          webAddress=new URL(endpoint);         
       } catch (MalformedURLException ex) {
          msg=Localization.getString(
-            "WebWorkerMessages", 
+            WebExportActivityWorkerMessages._BUNDLE_NAME,
             WebExportActivityWorkerMessages.ERR_BAD_ENDPOINT, 
             null, 
             null, 
@@ -224,22 +224,6 @@ public class WebExportActivityWorker extends ExportActivityWorker {
    }
    
    // ********** parameterMap
-   /**
-    * Returns a list of additional parameters that should be included in the 
-    * web address to which API calls are directed.
-    * 
-    * @return An empty {@code Map} of there are no additional parameters. 
-    * Otherwise a {@code Map} containing {@code parameterName} and 
-    * {@code parameterValue} pairs.
-    */
-   public Map<String,String> getParameterMap() {
-      logger.entering(_CLASS, "getParameterMap()");
-      Map<String,String> map=null;
-      
-      map=new TreeMap<String,String>();
-      logger.entering(_CLASS, "getParameterMap()",map);
-      return map;
-   }
    // ********** doWork
    /**
     * Perform the work associated with the web service call.
@@ -248,8 +232,7 @@ public class WebExportActivityWorker extends ExportActivityWorker {
       logger.entering(_CLASS, "doWork()");
       HttpURLConnection connection=null;
       InputStream in=null;
-      URL url=null;
-      
+      URL url=null;      
       
       url=buildURL();
       try {

@@ -15,6 +15,14 @@
 		<url>www.wildstartech.com</url>
 	</organization>
 	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -41,23 +49,23 @@
 		</license>
 	</licenses>
 	<developers>
-    <developer>
-      <id>derekberube</id>
-      <name>Derek Berube</name>
-      <email>derek.berube@wildstartech.com</email>
-      <url>https://www.linkedin.com/in/derekberube</url>
-      <organization>Wildstar Technologies, LLC.</organization>
-      <organizationUrl>http://www.wildstartech.com</organizationUrl>
-      <roles>
-        <role>architect</role>
-        <role>developer</role>
-      </roles>
-      <timezone>America/Chicago</timezone>
-      <properties>
-        <picUrl>https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAfDAAAAJDAxYmYxNmQ5LWE5NDItNDAwNS05MmViLWQ1MWFjMDFmZmJlMw.jpgc</picUrl>
-      </properties>
-    </developer>
-  </developers>
+		<developer>
+			<id>derekberube</id>
+			<name>Derek Berube</name>
+			<email>derek.berube@wildstartech.com</email>
+			<url>https://www.linkedin.com/in/derekberube</url>
+			<organization>Wildstar Technologies, LLC.</organization>
+			<organizationUrl>http://www.wildstartech.com</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>America/Chicago</timezone>
+			<properties>
+				<picUrl>https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAfDAAAAJDAxYmYxNmQ5LWE5NDItNDAwNS05MmViLWQ1MWFjMDFmZmJlMw.jpgc</picUrl>
+			</properties>
+		</developer>
+	</developers>
 	<scm>
 		<url>https://github.com/derekberube/wfa-dispatchtrack.git</url>
 	</scm>

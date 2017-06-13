@@ -46,6 +46,8 @@ package com.wildstartech.dispatchtrack;
 import java.util.ListResourceBundle;
 
 public class ServiceManagerMessages extends ListResourceBundle {
+   public static final String _BUNDLE_NAME="com.wildstartech.dispatchtrack.ServiceManagerMessages";
+   
    public static final String ERR_CONFIG_FILE_NOT_FOUND=
       "ERR_CONFIG_FILE_NOT_FOUND";
    public static final String ERR_CONFIG_PROPERTY_MISSING=

@@ -98,7 +98,7 @@ public class ServiceManagerFactory {
                   serviceManager=(ServiceManager) managerClass.newInstance();
                } catch (ClassNotFoundException ex) {
                   msg=Localization.getString(
-                     "ServiceManagerMessages", 
+                     ServiceManagerMessages._BUNDLE_NAME, 
                      ServiceManagerMessages.ERR_MANAGER_LOAD, 
                      null, 
                      cl, 
@@ -107,7 +107,7 @@ public class ServiceManagerFactory {
                   logger.severe(msg);
                } catch (InstantiationException ex) {
                   msg=Localization.getString(
-                     "ServiceManagerMessages", 
+                     ServiceManagerMessages._BUNDLE_NAME, 
                      ServiceManagerMessages.ERR_MANAGER_LOAD, 
                      null, 
                      cl, 
@@ -116,7 +116,7 @@ public class ServiceManagerFactory {
                   logger.severe(msg);
                } catch (IllegalAccessException ex) {
                   msg=Localization.getString(
-                     "ServiceManagerMessages", 
+                     ServiceManagerMessages._BUNDLE_NAME, 
                      ServiceManagerMessages.ERR_MANAGER_LOAD, 
                      null, 
                      cl, 
@@ -126,7 +126,7 @@ public class ServiceManagerFactory {
                } // END try/catch               
             } else {
                msg=Localization.getString(
-                  "ServiceManagerMessages", 
+                  ServiceManagerMessages._BUNDLE_NAME, 
                   ServiceManagerMessages.ERR_PROPERTY_NOT_FOUND, 
                   null, 
                   cl, 
@@ -137,7 +137,7 @@ public class ServiceManagerFactory {
             
          } catch (IOException ex) {
             msg=Localization.getString(
-               "ServiceManagerMessages", 
+               ServiceManagerMessages._BUNDLE_NAME, 
                ServiceManagerMessages.ERR_READING_CONFIG_FILE, 
                null, 
                cl, 

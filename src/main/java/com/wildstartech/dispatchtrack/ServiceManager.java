@@ -86,7 +86,7 @@ public abstract class ServiceManager {
    public static final String _CONFIG_KEY_APIKEY="api_key";
    public static final String _CONFIG_KEY_CODE="code";
    public static final String _CONFIG_KEY_SERVER="server";
-   public static final String _MANAGER_PROPERTIES="ServiceManager.properties";
+   public static final String _MANAGER_PROPERTIES="ServiceManager.properties";   
    
    public static enum OperationType {
       BULK_IMPORT,
@@ -133,7 +133,7 @@ public abstract class ServiceManager {
       checkProperties();
       if (!isInitialized()) {
          msg=Localization.getString(
-            "ServiceManagerMessages", 
+            ServiceManagerMessages._BUNDLE_NAME, 
             ServiceManagerMessages.ERR_INIT_FAILED, 
             null, 
             null, 
@@ -223,8 +223,8 @@ public abstract class ServiceManager {
             } // END try/catch
          } else {
             msg=Localization.getString(
-               "ServiceManagerMessages", 
-               ServiceManagerMessages.ERR_FILE_IOEXCEPTION, 
+                  ServiceManagerMessages._BUNDLE_NAME, 
+                  ServiceManagerMessages.ERR_FILE_IOEXCEPTION, 
                null, 
                cl, 
                new Object[] {_API_PROPERTIES});
@@ -232,7 +232,7 @@ public abstract class ServiceManager {
          } // END if (in != null)
       } else {
          msg=Localization.getString(
-            "ServiceManagerMessages", 
+            ServiceManagerMessages._BUNDLE_NAME, 
             ServiceManagerMessages.ERR_CONFIG_FILE_NOT_FOUND, 
             null, 
             cl, 
@@ -264,7 +264,7 @@ public abstract class ServiceManager {
       propValue=props.getProperty(propertyName);
       if (propValue == null) {
          msg=Localization.getString(
-            "ServiceManagerMessages", 
+            ServiceManagerMessages._BUNDLE_NAME, 
             ServiceManagerMessages.ERR_CONFIG_PROPERTY_MISSING, 
             null, 
             cl, 
@@ -307,7 +307,7 @@ public abstract class ServiceManager {
                _MANAGER_PROPERTIES));
          } catch (IOException ex) {
             msg=Localization.getString(
-                  "ServiceManagerMessages", 
+                  ServiceManagerMessages._BUNDLE_NAME, 
                   ServiceManagerMessages.ERR_READING_CONFIG_FILE, 
                   null, 
                   cl, 
@@ -315,7 +315,7 @@ public abstract class ServiceManager {
          } // END try/catch
       } else {
          msg=Localization.getString(
-               "ServiceManagerMessages", 
+               ServiceManagerMessages._BUNDLE_NAME, 
                ServiceManagerMessages.ERR_CONFIG_FILE_NOT_FOUND, 
                null, 
                cl, 
@@ -407,7 +407,7 @@ public abstract class ServiceManager {
          ) {
          this.initialized = false;
          msg=Localization.getString(
-            "ServiceManagerMessages", 
+            ServiceManagerMessages._BUNDLE_NAME, 
             ServiceManagerMessages.ERR_NOT_INITIALIZED, 
             null, 
             null, 
@@ -500,7 +500,7 @@ public abstract class ServiceManager {
          serviceEndpoint=MessageFormat.format(template, server);
       } else {
          msg=Localization.getString(
-            "ServiceManagerMessages", 
+            ServiceManagerMessages._BUNDLE_NAME, 
             ServiceManagerMessages.ERR_PROPERTY_NOT_FOUND, 
             null, 
             null, 

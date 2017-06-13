@@ -46,6 +46,8 @@ package com.wildstartech.dispatchtrack.spi.xml;
 import java.util.ListResourceBundle;
 
 public class WebExportActivityWorkerMessages  extends ListResourceBundle {
+   public static final String _BUNDLE_NAME=
+      "com.wildstartech.dispatchtrack.spi.xml.WebExportActivityWorkerMessages";
    public static final String ERR_BAD_ENDPOINT="ERR_BAD_ENDPOINT";
    public static final String ERR_IO_EXCEPTION="ERR_IO_EXCEPTION";
    public static final String ERR_XML_STREAM="ERR_XML_STREAM";

@@ -66,28 +66,27 @@ import com.wildstartech.dispatchtrack.spi.xml.serviceorder.ServiceOrdersXMLFacto
  * to extract activity data for a particular date.
  * 
  * <table>
- *    <tr>
- *       <th>Response Code</th>
- *       <th>Description</th>
- *    </tr>
- *    <tr>
- *       <td>406</td>
- *       <td>
- *          The <code>date</code> parameter was not specified as part of the 
- *          web request.
- *       </td>
- *    </tr>
+ * <tr>
+ * <th>Response Code</th>
+ * <th>Description</th>
+ * </tr>
+ * <tr>
+ * <td>406</td>
+ * <td>The <code>date</code> parameter was not specified as part of the web
+ * request.</td>
+ * </tr>
  * </table>
+ * 
  * @author Derek Berube, Wildstar Technologies, LLC.
  * @version 0.1
  */
 public abstract class ExportActivityWorker {
-   private static final String _CLASS=ExportActivityWorker.class.getName();
-   private static final Logger logger=Logger.getLogger(_CLASS);
-   private static final String DATE_FORMAT="yyyy-MM-dd";   
-   
+   private static final String _CLASS = ExportActivityWorker.class.getName();
+   private static final Logger logger = Logger.getLogger(_CLASS);
+   private static final String DATE_FORMAT = "yyyy-MM-dd";
+
    private Date activityDate;
-   
+
    /**
     * Default, no-argument constructor.
     */
@@ -96,87 +95,89 @@ public abstract class ExportActivityWorker {
       logger.entering(_CLASS, "ExportActivityWorker()");
       logger.exiting(_CLASS, "ExportActivityWorker()");
    }
-   
+
    public List<ServiceOrder> parse(InputStream in) {
-      logger.entering(_CLASS, "parse(InputStream)",in);
-      List<ServiceOrder> serviceOrders=null;
-      ServiceOrdersXMLFactory listFactory=null;
-      String msg=null;
-      XMLInputFactory xmlFactory=null;
-      XMLStreamReader reader=null;
+      logger.entering(_CLASS, "parse(InputStream)", in);
+      List<ServiceOrder> serviceOrders = null;
+      ServiceOrdersXMLFactory listFactory = null;
+      String msg = null;
+      XMLInputFactory xmlFactory = null;
+      XMLStreamReader reader = null;
       try {
          if (in != null) {
-            xmlFactory=XMLInputFactory.newInstance();
-            reader=xmlFactory.createXMLStreamReader(in);
-            listFactory=new ServiceOrdersXMLFactory();
-            while(reader.hasNext()) {
-               serviceOrders=listFactory.parse(reader);               
-            } // END while(reader.hasNext()) 
+            xmlFactory = XMLInputFactory.newInstance();
+            reader = xmlFactory.createXMLStreamReader(in);
+            listFactory = new ServiceOrdersXMLFactory();
+            while (reader.hasNext()) {
+               serviceOrders = listFactory.parse(reader);
+            } // END while(reader.hasNext())
             reader.close();
-         } // END if (in != null)         
+         } // END if (in != null)
       } catch (XMLStreamException ex) {
-         msg=Localization.getString(
-               WebExportActivityWorker._RESOURCE_BUNDLE, 
-               WebExportActivityWorkerMessages.ERR_XML_STREAM, 
-               null, 
-               null, 
-               null);
-         logger.log(Level.SEVERE,msg,ex);
+         msg = Localization.getString(
+                  WebExportActivityWorker._RESOURCE_BUNDLE,
+                  WebExportActivityWorkerMessages.ERR_XML_STREAM, 
+                  null, 
+                  null, 
+                  null);
+         logger.log(Level.SEVERE, msg, ex);
       } // END try/catch
-      logger.exiting(_CLASS, "parse(InputStream)",serviceOrders);
+      logger.exiting(_CLASS, "parse(InputStream)", serviceOrders);
       return serviceOrders;
    }
-   
+
    /**
-    * Constructor taking the desired activity date as an initializing
-    * parameter.
-    * @param date The date for which activity should be returned.
+    * Constructor taking the desired activity date as an initializing parameter.
+    * 
+    * @param date
+    *           The date for which activity should be returned.
     */
    public ExportActivityWorker(Date date) {
       super();
-      logger.entering(_CLASS, "ExportActivityWorker(Date)",date);
+      logger.entering(_CLASS, "ExportActivityWorker(Date)", date);
       setActivityDate(date);
       logger.entering(_CLASS, "ExportActivityWorker(Date)");
    }
-   
+
    /* ***** Accessor Methods *****/
    public Date getActivityDate() {
       logger.entering(_CLASS, "getActivityDate()");
-      logger.exiting(_CLASS, "getActivityDate()",this.activityDate);
+      logger.exiting(_CLASS, "getActivityDate()", this.activityDate);
       return this.activityDate;
    }
+
    public void setActivityDate(Date activityDate) {
-      logger.entering(_CLASS, "setActivityDate(Date)",activityDate);
-      this.activityDate=activityDate;
+      logger.entering(_CLASS, "setActivityDate(Date)", activityDate);
+      this.activityDate = activityDate;
       logger.exiting(_CLASS, "setActivityDate(Date)");
    }
-   
-   /* ***** Utility Methods *****/   
+
+   /* ***** Utility Methods *****/
    // ********** dateForamt
    public DateFormat getDateFormat() {
       logger.entering(_CLASS, "getDateFormat()");
-      DateFormat dFmt=null;
-      
-      dFmt=new SimpleDateFormat(DATE_FORMAT);
-      
-      logger.exiting(_CLASS, "getDateFormat()",dFmt);
+      DateFormat dFmt = null;
+
+      dFmt = new SimpleDateFormat(DATE_FORMAT);
+
+      logger.exiting(_CLASS, "getDateFormat()", dFmt);
       return dFmt;
    }
-   
-   public Map<String,String> getParameterMap() {
+
+   public Map<String, String> getParameterMap() {
       logger.entering(_CLASS, "getParameterMap()");
-      Date activityDate=null;
-      DateFormat dfmt=null;
-      Map<String,String> map=null;
-      
-      map=new TreeMap<String,String>();
-      dfmt=getDateFormat();
-      activityDate=getActivityDate();
+      Date activityDate = null;
+      DateFormat dfmt = null;
+      Map<String, String> map = null;
+
+      map = new TreeMap<String, String>();
+      dfmt = getDateFormat();
+      activityDate = getActivityDate();
       if (activityDate != null) {
-         map.put("date", dfmt.format(activityDate));         
+         map.put("date", dfmt.format(activityDate));
       } // END if (activityDate != null)
-      
-      logger.exiting(_CLASS, "getParameterMap()",map);
+
+      logger.exiting(_CLASS, "getParameterMap()", map);
       return map;
-   }   
+   }
 }
