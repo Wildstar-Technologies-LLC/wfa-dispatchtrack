@@ -52,7 +52,6 @@ import javax.xml.stream.XMLStreamReader;
 import com.wildstartech.dispatchtrack.HistoryEvent;
 import com.wildstartech.dispatchtrack.Localization;
 import com.wildstartech.dispatchtrack.ServiceOrder;
-import com.wildstartech.dispatchtrack.ShipmentEvent;
 import com.wildstartech.dispatchtrack.spi.xml.XMLElementProcessor;
 import com.wildstartech.dispatchtrack.spi.xml.XMLElementProcessorMessages;
 import com.wildstartech.dispatchtrack.spi.xml.serviceorder.orderhistory.OrderHistoryXMLFactory;
