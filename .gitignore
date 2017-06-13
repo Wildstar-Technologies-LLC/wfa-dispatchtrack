@@ -6,4 +6,4 @@ target/**
 test-output/**
 /bin/
 **/ServiceManager.properties
-src/main/java/com/wildstartech/dispatchtrack/spi/xml/WebExportActivityWorker.java
+src/test/java/com/wildstartech/dispatchtrack/WebExportActityWorkerTest.java
